@@ -1,0 +1,1419 @@
+{
+  "source": "Inkipedia MediaWiki API / S3 Weapon Main * 2D Current.png",
+  "rightsNote": "Images are Nintendo-owned Splatoon 3 weapon renders mirrored by Inkipedia. Intended for local non-commercial fan use only.",
+  "downloadedCount": 141,
+  "missingCount": 0,
+  "items": [
+    {
+      "id": "shooter-0",
+      "displayNameEn": "Splattershot Jr.",
+      "title": "File:S3 Weapon Main Splattershot Jr. 2D Current.png",
+      "path": "assets/weapons/shooter-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/81/S3_Weapon_Main_Splattershot_Jr._2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-1",
+      "displayNameEn": "Splattershot",
+      "title": "File:S3 Weapon Main Splattershot 2D Current.png",
+      "path": "assets/weapons/shooter-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/70/S3_Weapon_Main_Splattershot_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-2",
+      "displayNameEn": "N-ZAP '85",
+      "title": "File:S3 Weapon Main N-ZAP '85 2D Current.png",
+      "path": "assets/weapons/shooter-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/1d/S3_Weapon_Main_N-ZAP_%2785_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-3",
+      "displayNameEn": "Custom Splattershot Jr.",
+      "title": "File:S3 Weapon Main Custom Splattershot Jr. 2D Current.png",
+      "path": "assets/weapons/shooter-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/f2/S3_Weapon_Main_Custom_Splattershot_Jr._2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-4",
+      "displayNameEn": "Splattershot Nova",
+      "title": "File:S3 Weapon Main Splattershot Nova 2D Current.png",
+      "path": "assets/weapons/shooter-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/13/S3_Weapon_Main_Splattershot_Nova_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-5",
+      "displayNameEn": "Sploosh-o-matic",
+      "title": "File:S3 Weapon Main Sploosh-o-matic 2D Current.png",
+      "path": "assets/weapons/shooter-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/da/S3_Weapon_Main_Sploosh-o-matic_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-6",
+      "displayNameEn": "Splattershot Pro",
+      "title": "File:S3 Weapon Main Splattershot Pro 2D Current.png",
+      "path": "assets/weapons/shooter-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/1c/S3_Weapon_Main_Splattershot_Pro_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-7",
+      "displayNameEn": "Tentatek Splattershot",
+      "title": "File:S3 Weapon Main Tentatek Splattershot 2D Current.png",
+      "path": "assets/weapons/shooter-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/79/S3_Weapon_Main_Tentatek_Splattershot_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-8",
+      "displayNameEn": ".52 Gal",
+      "title": "File:S3 Weapon Main .52 Gal 2D Current.png",
+      "path": "assets/weapons/shooter-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/4d/S3_Weapon_Main_.52_Gal_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-9",
+      "displayNameEn": "N-ZAP '89",
+      "title": "File:S3 Weapon Main N-ZAP '89 2D Current.png",
+      "path": "assets/weapons/shooter-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/59/S3_Weapon_Main_N-ZAP_%2789_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-10",
+      "displayNameEn": "Annaki Splattershot Nova",
+      "title": "File:S3 Weapon Main Annaki Splattershot Nova 2D Current.png",
+      "path": "assets/weapons/shooter-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/08/S3_Weapon_Main_Annaki_Splattershot_Nova_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-11",
+      "displayNameEn": "L-3 Nozzlenose",
+      "title": "File:S3 Weapon Main L-3 Nozzlenose 2D Current.png",
+      "path": "assets/weapons/shooter-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/10/S3_Weapon_Main_L-3_Nozzlenose_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-12",
+      "displayNameEn": "Neo Sploosh-o-matic",
+      "title": "File:S3 Weapon Main Neo Sploosh-o-matic 2D Current.png",
+      "path": "assets/weapons/shooter-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/37/S3_Weapon_Main_Neo_Sploosh-o-matic_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-13",
+      "displayNameEn": ".52 Gal Deco",
+      "title": "File:S3 Weapon Main .52 Gal Deco 2D Current.png",
+      "path": "assets/weapons/shooter-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/3b/S3_Weapon_Main_.52_Gal_Deco_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-14",
+      "displayNameEn": "Jet Squelcher",
+      "title": "File:S3 Weapon Main Jet Squelcher 2D Current.png",
+      "path": "assets/weapons/shooter-14.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/90/S3_Weapon_Main_Jet_Squelcher_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-15",
+      "displayNameEn": "Splash-o-matic",
+      "title": "File:S3 Weapon Main Splash-o-matic 2D Current.png",
+      "path": "assets/weapons/shooter-15.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/4c/S3_Weapon_Main_Splash-o-matic_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-16",
+      "displayNameEn": ".96 Gal",
+      "title": "File:S3 Weapon Main .96 Gal 2D Current.png",
+      "path": "assets/weapons/shooter-16.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/6/66/S3_Weapon_Main_.96_Gal_2D_Current.png",
+      "width": 200,
+      "height": 200,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-17",
+      "displayNameEn": "Aerospray MG",
+      "title": "File:S3 Weapon Main Aerospray MG 2D Current.png",
+      "path": "assets/weapons/shooter-17.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/22/S3_Weapon_Main_Aerospray_MG_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-18",
+      "displayNameEn": "Aerospray RG",
+      "title": "File:S3 Weapon Main Aerospray RG 2D Current.png",
+      "path": "assets/weapons/shooter-18.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/aa/S3_Weapon_Main_Aerospray_RG_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-19",
+      "displayNameEn": "Squeezer",
+      "title": "File:S3 Weapon Main Squeezer 2D Current.png",
+      "path": "assets/weapons/shooter-19.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e5/S3_Weapon_Main_Squeezer_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-20",
+      "displayNameEn": "L-3 Nozzlenose D",
+      "title": "File:S3 Weapon Main L-3 Nozzlenose D 2D Current.png",
+      "path": "assets/weapons/shooter-20.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/25/S3_Weapon_Main_L-3_Nozzlenose_D_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-21",
+      "displayNameEn": "Custom Jet Squelcher",
+      "title": "File:S3 Weapon Main Custom Jet Squelcher 2D Current.png",
+      "path": "assets/weapons/shooter-21.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b7/S3_Weapon_Main_Custom_Jet_Squelcher_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-22",
+      "displayNameEn": "Forge Splattershot Pro",
+      "title": "File:S3 Weapon Main Forge Splattershot Pro 2D Current.png",
+      "path": "assets/weapons/shooter-22.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/a9/S3_Weapon_Main_Forge_Splattershot_Pro_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-23",
+      "displayNameEn": "Neo Splash-o-matic",
+      "title": "File:S3 Weapon Main Neo Splash-o-matic 2D Current.png",
+      "path": "assets/weapons/shooter-23.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e8/S3_Weapon_Main_Neo_Splash-o-matic_2D_Current.png",
+      "width": 512,
+      "height": 512,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-24",
+      "displayNameEn": ".96 Gal Deco",
+      "title": "File:S3 Weapon Main .96 Gal Deco 2D Current.png",
+      "path": "assets/weapons/shooter-24.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/1f/S3_Weapon_Main_.96_Gal_Deco_2D_Current.png",
+      "width": 200,
+      "height": 200,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-25",
+      "displayNameEn": "H-3 Nozzlenose",
+      "title": "File:S3 Weapon Main H-3 Nozzlenose 2D Current.png",
+      "path": "assets/weapons/shooter-25.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/91/S3_Weapon_Main_H-3_Nozzlenose_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-26",
+      "displayNameEn": "Foil Squeezer",
+      "title": "File:S3 Weapon Main Foil Squeezer 2D Current.png",
+      "path": "assets/weapons/shooter-26.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b1/S3_Weapon_Main_Foil_Squeezer_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-27",
+      "displayNameEn": "H-3 Nozzlenose D",
+      "title": "File:S3 Weapon Main H-3 Nozzlenose D 2D Current.png",
+      "path": "assets/weapons/shooter-27.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/7b/S3_Weapon_Main_H-3_Nozzlenose_D_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-28",
+      "displayNameEn": "Order Shot Replica",
+      "title": "File:S3 Weapon Main Order Shot Replica 2D Current.png",
+      "path": "assets/weapons/shooter-28.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/a0/S3_Weapon_Main_Order_Shot_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-0",
+      "displayNameEn": "Splat Roller",
+      "title": "File:S3 Weapon Main Splat Roller 2D Current.png",
+      "path": "assets/weapons/roller-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/70/S3_Weapon_Main_Splat_Roller_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-1",
+      "displayNameEn": "Carbon Roller",
+      "title": "File:S3 Weapon Main Carbon Roller 2D Current.png",
+      "path": "assets/weapons/roller-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/6/65/S3_Weapon_Main_Carbon_Roller_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-2",
+      "displayNameEn": "Krak-On Splat Roller",
+      "title": "File:S3 Weapon Main Krak-On Splat Roller 2D Current.png",
+      "path": "assets/weapons/roller-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/f4/S3_Weapon_Main_Krak-On_Splat_Roller_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-3",
+      "displayNameEn": "Dynamo Roller",
+      "title": "File:S3 Weapon Main Dynamo Roller 2D Current.png",
+      "path": "assets/weapons/roller-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/98/S3_Weapon_Main_Dynamo_Roller_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-4",
+      "displayNameEn": "Big Swig Roller",
+      "title": "File:S3 Weapon Main Big Swig Roller 2D Current.png",
+      "path": "assets/weapons/roller-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/49/S3_Weapon_Main_Big_Swig_Roller_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-5",
+      "displayNameEn": "Gold Dynamo Roller",
+      "title": "File:S3 Weapon Main Gold Dynamo Roller 2D Current.png",
+      "path": "assets/weapons/roller-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/75/S3_Weapon_Main_Gold_Dynamo_Roller_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-6",
+      "displayNameEn": "Big Swig Roller Express",
+      "title": "File:S3 Weapon Main Big Swig Roller Express 2D Current.png",
+      "path": "assets/weapons/roller-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/dc/S3_Weapon_Main_Big_Swig_Roller_Express_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-7",
+      "displayNameEn": "Flingza Roller",
+      "title": "File:S3 Weapon Main Flingza Roller 2D Current.png",
+      "path": "assets/weapons/roller-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/bc/S3_Weapon_Main_Flingza_Roller_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-8",
+      "displayNameEn": "Carbon Roller Deco",
+      "title": "File:S3 Weapon Main Carbon Roller Deco 2D Current.png",
+      "path": "assets/weapons/roller-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/7d/S3_Weapon_Main_Carbon_Roller_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-9",
+      "displayNameEn": "Foil Flingza Roller",
+      "title": "File:S3 Weapon Main Foil Flingza Roller 2D Current.png",
+      "path": "assets/weapons/roller-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e8/S3_Weapon_Main_Foil_Flingza_Roller_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-10",
+      "displayNameEn": "Order Roller Replica",
+      "title": "File:S3 Weapon Main Order Roller Replica 2D Current.png",
+      "path": "assets/weapons/roller-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/fb/S3_Weapon_Main_Order_Roller_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-0",
+      "displayNameEn": "Splat Charger",
+      "title": "File:S3 Weapon Main Splat Charger 2D Current.png",
+      "path": "assets/weapons/charger-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/d5/S3_Weapon_Main_Splat_Charger_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-1",
+      "displayNameEn": "Classic Squiffer",
+      "title": "File:S3 Weapon Main Classic Squiffer 2D Current.png",
+      "path": "assets/weapons/charger-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/d3/S3_Weapon_Main_Classic_Squiffer_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-2",
+      "displayNameEn": "Z+F Splat Charger",
+      "title": "File:S3 Weapon Main Z+F Splat Charger 2D Current.png",
+      "path": "assets/weapons/charger-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/43/S3_Weapon_Main_Z%2BF_Splat_Charger_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-3",
+      "displayNameEn": "Splatterscope",
+      "title": "File:S3 Weapon Main Splatterscope 2D Current.png",
+      "path": "assets/weapons/charger-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/93/S3_Weapon_Main_Splatterscope_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-4",
+      "displayNameEn": "New Squiffer",
+      "title": "File:S3 Weapon Main New Squiffer 2D Current.png",
+      "path": "assets/weapons/charger-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/ed/S3_Weapon_Main_New_Squiffer_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-5",
+      "displayNameEn": "Snipewriter 5H",
+      "title": "File:S3 Weapon Main Snipewriter 5H 2D Current.png",
+      "path": "assets/weapons/charger-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/8a/S3_Weapon_Main_Snipewriter_5H_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-6",
+      "displayNameEn": "Z+F Splatterscope",
+      "title": "File:S3 Weapon Main Z+F Splatterscope 2D Current.png",
+      "path": "assets/weapons/charger-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/ad/S3_Weapon_Main_Z%2BF_Splatterscope_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-7",
+      "displayNameEn": "E-liter 4K",
+      "title": "File:S3 Weapon Main E-liter 4K 2D Current.png",
+      "path": "assets/weapons/charger-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/51/S3_Weapon_Main_E-liter_4K_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-8",
+      "displayNameEn": "Snipewriter 5B",
+      "title": "File:S3 Weapon Main Snipewriter 5B 2D Current.png",
+      "path": "assets/weapons/charger-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/7c/S3_Weapon_Main_Snipewriter_5B_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-9",
+      "displayNameEn": "Custom E-liter 4K",
+      "title": "File:S3 Weapon Main Custom E-liter 4K 2D Current.png",
+      "path": "assets/weapons/charger-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c7/S3_Weapon_Main_Custom_E-liter_4K_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-10",
+      "displayNameEn": "Bamboozler 14 Mk I",
+      "title": "File:S3 Weapon Main Bamboozler 14 Mk I 2D Current.png",
+      "path": "assets/weapons/charger-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/83/S3_Weapon_Main_Bamboozler_14_Mk_I_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-11",
+      "displayNameEn": "Goo Tuber",
+      "title": "File:S3 Weapon Main Goo Tuber 2D Current.png",
+      "path": "assets/weapons/charger-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/5a/S3_Weapon_Main_Goo_Tuber_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-12",
+      "displayNameEn": "Bamboozler 14 Mk II",
+      "title": "File:S3 Weapon Main Bamboozler 14 Mk II 2D Current.png",
+      "path": "assets/weapons/charger-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/51/S3_Weapon_Main_Bamboozler_14_Mk_II_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-13",
+      "displayNameEn": "E-liter 4K Scope",
+      "title": "File:S3 Weapon Main E-liter 4K Scope 2D Current.png",
+      "path": "assets/weapons/charger-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/88/S3_Weapon_Main_E-liter_4K_Scope_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-14",
+      "displayNameEn": "Custom Goo Tuber",
+      "title": "File:S3 Weapon Main Custom Goo Tuber 2D Current.png",
+      "path": "assets/weapons/charger-14.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/81/S3_Weapon_Main_Custom_Goo_Tuber_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-15",
+      "displayNameEn": "Custom E-liter 4K Scope",
+      "title": "File:S3 Weapon Main Custom E-liter 4K Scope 2D Current.png",
+      "path": "assets/weapons/charger-15.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/85/S3_Weapon_Main_Custom_E-liter_4K_Scope_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-16",
+      "displayNameEn": "Order Charger Replica",
+      "title": "File:S3 Weapon Main Order Charger Replica 2D Current.png",
+      "path": "assets/weapons/charger-16.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/9c/S3_Weapon_Main_Order_Charger_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-0",
+      "displayNameEn": "Slosher",
+      "title": "File:S3 Weapon Main Slosher 2D Current.png",
+      "path": "assets/weapons/slosher-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/9a/S3_Weapon_Main_Slosher_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-1",
+      "displayNameEn": "Tri-Slosher",
+      "title": "File:S3 Weapon Main Tri-Slosher 2D Current.png",
+      "path": "assets/weapons/slosher-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/49/S3_Weapon_Main_Tri-Slosher_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-2",
+      "displayNameEn": "Slosher Deco",
+      "title": "File:S3 Weapon Main Slosher Deco 2D Current.png",
+      "path": "assets/weapons/slosher-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b0/S3_Weapon_Main_Slosher_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-3",
+      "displayNameEn": "Sloshing Machine",
+      "title": "File:S3 Weapon Main Sloshing Machine 2D Current.png",
+      "path": "assets/weapons/slosher-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/0f/S3_Weapon_Main_Sloshing_Machine_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-4",
+      "displayNameEn": "Dread Wringer",
+      "title": "File:S3 Weapon Main Dread Wringer 2D Current.png",
+      "path": "assets/weapons/slosher-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c4/S3_Weapon_Main_Dread_Wringer_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-5",
+      "displayNameEn": "Tri-Slosher Nouveau",
+      "title": "File:S3 Weapon Main Tri-Slosher Nouveau 2D Current.png",
+      "path": "assets/weapons/slosher-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/15/S3_Weapon_Main_Tri-Slosher_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-6",
+      "displayNameEn": "Dread Wringer D",
+      "title": "File:S3 Weapon Main Dread Wringer D 2D Current.png",
+      "path": "assets/weapons/slosher-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/94/S3_Weapon_Main_Dread_Wringer_D_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-7",
+      "displayNameEn": "Bloblobber",
+      "title": "File:S3 Weapon Main Bloblobber 2D Current.png",
+      "path": "assets/weapons/slosher-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/3e/S3_Weapon_Main_Bloblobber_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-8",
+      "displayNameEn": "Sloshing Machine Neo",
+      "title": "File:S3 Weapon Main Sloshing Machine Neo 2D Current.png",
+      "path": "assets/weapons/slosher-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c4/S3_Weapon_Main_Sloshing_Machine_Neo_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-9",
+      "displayNameEn": "Bloblobber Deco",
+      "title": "File:S3 Weapon Main Bloblobber Deco 2D Current.png",
+      "path": "assets/weapons/slosher-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e0/S3_Weapon_Main_Bloblobber_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-10",
+      "displayNameEn": "Explosher",
+      "title": "File:S3 Weapon Main Explosher 2D Current.png",
+      "path": "assets/weapons/slosher-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/0d/S3_Weapon_Main_Explosher_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-11",
+      "displayNameEn": "Custom Explosher",
+      "title": "File:S3 Weapon Main Custom Explosher 2D Current.png",
+      "path": "assets/weapons/slosher-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/da/S3_Weapon_Main_Custom_Explosher_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-12",
+      "displayNameEn": "Order Slosher Replica",
+      "title": "File:S3 Weapon Main Order Slosher Replica 2D Current.png",
+      "path": "assets/weapons/slosher-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/51/S3_Weapon_Main_Order_Slosher_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-0",
+      "displayNameEn": "Heavy Splatling",
+      "title": "File:S3 Weapon Main Heavy Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e3/S3_Weapon_Main_Heavy_Splatling_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-1",
+      "displayNameEn": "Mini Splatling",
+      "title": "File:S3 Weapon Main Mini Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/94/S3_Weapon_Main_Mini_Splatling_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-2",
+      "displayNameEn": "Heavy Edit Splatling",
+      "title": "File:S3 Weapon Main Heavy Edit Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/24/S3_Weapon_Main_Heavy_Edit_Splatling_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-3",
+      "displayNameEn": "Heavy Splatling Deco",
+      "title": "File:S3 Weapon Main Heavy Splatling Deco 2D Current.png",
+      "path": "assets/weapons/splatling-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/49/S3_Weapon_Main_Heavy_Splatling_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-4",
+      "displayNameEn": "Heavy Edit Splatling Nouveau",
+      "title": "File:S3 Weapon Main Heavy Edit Splatling Nouveau 2D Current.png",
+      "path": "assets/weapons/splatling-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/3b/S3_Weapon_Main_Heavy_Edit_Splatling_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-5",
+      "displayNameEn": "Hydra Splatling",
+      "title": "File:S3 Weapon Main Hydra Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/3d/S3_Weapon_Main_Hydra_Splatling_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-6",
+      "displayNameEn": "Custom Hydra Splatling",
+      "title": "File:S3 Weapon Main Custom Hydra Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/9f/S3_Weapon_Main_Custom_Hydra_Splatling_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-7",
+      "displayNameEn": "Zink Mini Splatling",
+      "title": "File:S3 Weapon Main Zink Mini Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/96/S3_Weapon_Main_Zink_Mini_Splatling_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-8",
+      "displayNameEn": "Nautilus 47",
+      "title": "File:S3 Weapon Main Nautilus 47 2D Current.png",
+      "path": "assets/weapons/splatling-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/cf/S3_Weapon_Main_Nautilus_47_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-9",
+      "displayNameEn": "Nautilus 79",
+      "title": "File:S3 Weapon Main Nautilus 79 2D Current.png",
+      "path": "assets/weapons/splatling-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/33/S3_Weapon_Main_Nautilus_79_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-10",
+      "displayNameEn": "Ballpoint Splatling",
+      "title": "File:S3 Weapon Main Ballpoint Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/44/S3_Weapon_Main_Ballpoint_Splatling_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-11",
+      "displayNameEn": "Ballpoint Splatling Nouveau",
+      "title": "File:S3 Weapon Main Ballpoint Splatling Nouveau 2D Current.png",
+      "path": "assets/weapons/splatling-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/ce/S3_Weapon_Main_Ballpoint_Splatling_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-12",
+      "displayNameEn": "Order Splatling Replica",
+      "title": "File:S3 Weapon Main Order Splatling Replica 2D Current.png",
+      "path": "assets/weapons/splatling-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/ba/S3_Weapon_Main_Order_Splatling_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-0",
+      "displayNameEn": "Splat Dualies",
+      "title": "File:S3 Weapon Main Splat Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/5c/S3_Weapon_Main_Splat_Dualies_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-1",
+      "displayNameEn": "Dualie Squelchers",
+      "title": "File:S3 Weapon Main Dualie Squelchers 2D Current.png",
+      "path": "assets/weapons/dualies-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/49/S3_Weapon_Main_Dualie_Squelchers_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-2",
+      "displayNameEn": "Enperry Splat Dualies",
+      "title": "File:S3 Weapon Main Enperry Splat Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/f6/S3_Weapon_Main_Enperry_Splat_Dualies_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-3",
+      "displayNameEn": "Dapple Dualies",
+      "title": "File:S3 Weapon Main Dapple Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c5/S3_Weapon_Main_Dapple_Dualies_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-4",
+      "displayNameEn": "Custom Dualie Squelchers",
+      "title": "File:S3 Weapon Main Custom Dualie Squelchers 2D Current.png",
+      "path": "assets/weapons/dualies-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/f4/S3_Weapon_Main_Custom_Dualie_Squelchers_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-5",
+      "displayNameEn": "Dark Tetra Dualies",
+      "title": "File:S3 Weapon Main Dark Tetra Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/51/S3_Weapon_Main_Dark_Tetra_Dualies_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-6",
+      "displayNameEn": "Glooga Dualies",
+      "title": "File:S3 Weapon Main Glooga Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/05/S3_Weapon_Main_Glooga_Dualies_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-7",
+      "displayNameEn": "Douser Dualies FF",
+      "title": "File:S3 Weapon Main Douser Dualies FF 2D Current.png",
+      "path": "assets/weapons/dualies-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/d9/S3_Weapon_Main_Douser_Dualies_FF_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-8",
+      "displayNameEn": "Light Tetra Dualies",
+      "title": "File:S3 Weapon Main Light Tetra Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/ce/S3_Weapon_Main_Light_Tetra_Dualies_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-9",
+      "displayNameEn": "Dapple Dualies Nouveau",
+      "title": "File:S3 Weapon Main Dapple Dualies Nouveau 2D Current.png",
+      "path": "assets/weapons/dualies-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c2/S3_Weapon_Main_Dapple_Dualies_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-10",
+      "displayNameEn": "Glooga Dualies Deco",
+      "title": "File:S3 Weapon Main Glooga Dualies Deco 2D Current.png",
+      "path": "assets/weapons/dualies-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/dd/S3_Weapon_Main_Glooga_Dualies_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-11",
+      "displayNameEn": "Custom Douser Dualies FF",
+      "title": "File:S3 Weapon Main Custom Douser Dualies FF 2D Current.png",
+      "path": "assets/weapons/dualies-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/af/S3_Weapon_Main_Custom_Douser_Dualies_FF_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-12",
+      "displayNameEn": "Order Dualie Replicas",
+      "title": "File:S3 Weapon Main Order Dualie Replicas 2D Current.png",
+      "path": "assets/weapons/dualies-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/fc/S3_Weapon_Main_Order_Dualie_Replicas_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-0",
+      "displayNameEn": "Splat Brella",
+      "title": "File:S3 Weapon Main Splat Brella 2D Current.png",
+      "path": "assets/weapons/brella-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b4/S3_Weapon_Main_Splat_Brella_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-1",
+      "displayNameEn": "Recycled Brella 24 Mk I",
+      "title": "File:S3 Weapon Main Recycled Brella 24 Mk I 2D Current.png",
+      "path": "assets/weapons/brella-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/a1/S3_Weapon_Main_Recycled_Brella_24_Mk_I_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-2",
+      "displayNameEn": "Tenta Brella",
+      "title": "File:S3 Weapon Main Tenta Brella 2D Current.png",
+      "path": "assets/weapons/brella-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/39/S3_Weapon_Main_Tenta_Brella_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-3",
+      "displayNameEn": "Undercover Brella",
+      "title": "File:S3 Weapon Main Undercover Brella 2D Current.png",
+      "path": "assets/weapons/brella-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e0/S3_Weapon_Main_Undercover_Brella_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-4",
+      "displayNameEn": "Sorella Brella",
+      "title": "File:S3 Weapon Main Sorella Brella 2D Current.png",
+      "path": "assets/weapons/brella-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/8f/S3_Weapon_Main_Sorella_Brella_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-5",
+      "displayNameEn": "Recycled Brella 24 Mk II",
+      "title": "File:S3 Weapon Main Recycled Brella 24 Mk II 2D Current.png",
+      "path": "assets/weapons/brella-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/0a/S3_Weapon_Main_Recycled_Brella_24_Mk_II_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-6",
+      "displayNameEn": "Tenta Sorella Brella",
+      "title": "File:S3 Weapon Main Tenta Sorella Brella 2D Current.png",
+      "path": "assets/weapons/brella-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/9d/S3_Weapon_Main_Tenta_Sorella_Brella_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-7",
+      "displayNameEn": "Undercover Sorella Brella",
+      "title": "File:S3 Weapon Main Undercover Sorella Brella 2D Current.png",
+      "path": "assets/weapons/brella-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/9d/S3_Weapon_Main_Undercover_Sorella_Brella_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-8",
+      "displayNameEn": "Order Brella Replica",
+      "title": "File:S3 Weapon Main Order Brella Replica 2D Current.png",
+      "path": "assets/weapons/brella-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/7f/S3_Weapon_Main_Order_Brella_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-0",
+      "displayNameEn": "Blaster",
+      "title": "File:S3 Weapon Main Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/5e/S3_Weapon_Main_Blaster_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-1",
+      "displayNameEn": "Rapid Blaster",
+      "title": "File:S3 Weapon Main Rapid Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/15/S3_Weapon_Main_Rapid_Blaster_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-2",
+      "displayNameEn": "Custom Blaster",
+      "title": "File:S3 Weapon Main Custom Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/57/S3_Weapon_Main_Custom_Blaster_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-3",
+      "displayNameEn": "Rapid Blaster Deco",
+      "title": "File:S3 Weapon Main Rapid Blaster Deco 2D Current.png",
+      "path": "assets/weapons/blaster-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/02/S3_Weapon_Main_Rapid_Blaster_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-4",
+      "displayNameEn": "Range Blaster",
+      "title": "File:S3 Weapon Main Range Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/00/S3_Weapon_Main_Range_Blaster_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-5",
+      "displayNameEn": "Luna Blaster",
+      "title": "File:S3 Weapon Main Luna Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/37/S3_Weapon_Main_Luna_Blaster_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-6",
+      "displayNameEn": "Custom Range Blaster",
+      "title": "File:S3 Weapon Main Custom Range Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/f9/S3_Weapon_Main_Custom_Range_Blaster_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-7",
+      "displayNameEn": "S-BLAST '92",
+      "title": "File:S3 Weapon Main S-BLAST '92 2D Current.png",
+      "path": "assets/weapons/blaster-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e7/S3_Weapon_Main_S-BLAST_%2792_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-8",
+      "displayNameEn": "Clash Blaster",
+      "title": "File:S3 Weapon Main Clash Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/6/62/S3_Weapon_Main_Clash_Blaster_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-9",
+      "displayNameEn": "Luna Blaster Neo",
+      "title": "File:S3 Weapon Main Luna Blaster Neo 2D Current.png",
+      "path": "assets/weapons/blaster-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/2d/S3_Weapon_Main_Luna_Blaster_Neo_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-10",
+      "displayNameEn": "Clash Blaster Neo",
+      "title": "File:S3 Weapon Main Clash Blaster Neo 2D Current.png",
+      "path": "assets/weapons/blaster-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/7e/S3_Weapon_Main_Clash_Blaster_Neo_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-11",
+      "displayNameEn": "Rapid Blaster Pro",
+      "title": "File:S3 Weapon Main Rapid Blaster Pro 2D Current.png",
+      "path": "assets/weapons/blaster-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/6/6c/S3_Weapon_Main_Rapid_Blaster_Pro_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-12",
+      "displayNameEn": "S-BLAST '91",
+      "title": "File:S3 Weapon Main S-BLAST '91 2D Current.png",
+      "path": "assets/weapons/blaster-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/a/ad/S3_Weapon_Main_S-BLAST_%2791_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-13",
+      "displayNameEn": "Rapid Blaster Pro Deco",
+      "title": "File:S3 Weapon Main Rapid Blaster Pro Deco 2D Current.png",
+      "path": "assets/weapons/blaster-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/ce/S3_Weapon_Main_Rapid_Blaster_Pro_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-14",
+      "displayNameEn": "Order Blaster Replica",
+      "title": "File:S3 Weapon Main Order Blaster Replica 2D Current.png",
+      "path": "assets/weapons/blaster-14.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/eb/S3_Weapon_Main_Order_Blaster_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-0",
+      "displayNameEn": "Octobrush",
+      "title": "File:S3 Weapon Main Octobrush 2D Current.png",
+      "path": "assets/weapons/brush-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/04/S3_Weapon_Main_Octobrush_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-1",
+      "displayNameEn": "Inkbrush",
+      "title": "File:S3 Weapon Main Inkbrush 2D Current.png",
+      "path": "assets/weapons/brush-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/d4/S3_Weapon_Main_Inkbrush_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-2",
+      "displayNameEn": "Octobrush Nouveau",
+      "title": "File:S3 Weapon Main Octobrush Nouveau 2D Current.png",
+      "path": "assets/weapons/brush-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/4a/S3_Weapon_Main_Octobrush_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-3",
+      "displayNameEn": "Painbrush",
+      "title": "File:S3 Weapon Main Painbrush 2D Current.png",
+      "path": "assets/weapons/brush-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/3/30/S3_Weapon_Main_Painbrush_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-4",
+      "displayNameEn": "Inkbrush Nouveau",
+      "title": "File:S3 Weapon Main Inkbrush Nouveau 2D Current.png",
+      "path": "assets/weapons/brush-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/4a/S3_Weapon_Main_Inkbrush_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-5",
+      "displayNameEn": "Painbrush Nouveau",
+      "title": "File:S3 Weapon Main Painbrush Nouveau 2D Current.png",
+      "path": "assets/weapons/brush-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/07/S3_Weapon_Main_Painbrush_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-6",
+      "displayNameEn": "Orderbrush Replica",
+      "title": "File:S3 Weapon Main Orderbrush Replica 2D Current.png",
+      "path": "assets/weapons/brush-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c2/S3_Weapon_Main_Orderbrush_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-0",
+      "displayNameEn": "Tri-Stringer",
+      "title": "File:S3 Weapon Main Tri-Stringer 2D Current.png",
+      "path": "assets/weapons/stringer-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/09/S3_Weapon_Main_Tri-Stringer_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-1",
+      "displayNameEn": "REEF-LUX 450",
+      "title": "File:S3 Weapon Main REEF-LUX 450 2D Current.png",
+      "path": "assets/weapons/stringer-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/21/S3_Weapon_Main_REEF-LUX_450_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-2",
+      "displayNameEn": "Inkline Tri-Stringer",
+      "title": "File:S3 Weapon Main Inkline Tri-Stringer 2D Current.png",
+      "path": "assets/weapons/stringer-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/53/S3_Weapon_Main_Inkline_Tri-Stringer_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-3",
+      "displayNameEn": "REEF-LUX 450 Deco",
+      "title": "File:S3 Weapon Main REEF-LUX 450 Deco 2D Current.png",
+      "path": "assets/weapons/stringer-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/ee/S3_Weapon_Main_REEF-LUX_450_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-4",
+      "displayNameEn": "Wellstring V",
+      "title": "File:S3 Weapon Main Wellstring V 2D Current.png",
+      "path": "assets/weapons/stringer-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e5/S3_Weapon_Main_Wellstring_V_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-5",
+      "displayNameEn": "Custom Wellstring V",
+      "title": "File:S3 Weapon Main Custom Wellstring V 2D Current.png",
+      "path": "assets/weapons/stringer-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/9/96/S3_Weapon_Main_Custom_Wellstring_V_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-6",
+      "displayNameEn": "Order Stringer Replica",
+      "title": "File:S3 Weapon Main Order Stringer Replica 2D Current.png",
+      "path": "assets/weapons/stringer-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/0b/S3_Weapon_Main_Order_Stringer_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-0",
+      "displayNameEn": "Splatana Wiper",
+      "title": "File:S3 Weapon Main Splatana Wiper 2D Current.png",
+      "path": "assets/weapons/splatana-0.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/1f/S3_Weapon_Main_Splatana_Wiper_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-1",
+      "displayNameEn": "Splatana Wiper Deco",
+      "title": "File:S3 Weapon Main Splatana Wiper Deco 2D Current.png",
+      "path": "assets/weapons/splatana-1.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/18/S3_Weapon_Main_Splatana_Wiper_Deco_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-2",
+      "displayNameEn": "Splatana Stamper",
+      "title": "File:S3 Weapon Main Splatana Stamper 2D Current.png",
+      "path": "assets/weapons/splatana-2.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/78/S3_Weapon_Main_Splatana_Stamper_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-3",
+      "displayNameEn": "Splatana Stamper Nouveau",
+      "title": "File:S3 Weapon Main Splatana Stamper Nouveau 2D Current.png",
+      "path": "assets/weapons/splatana-3.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b6/S3_Weapon_Main_Splatana_Stamper_Nouveau_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-4",
+      "displayNameEn": "Mint Decavitator",
+      "title": "File:S3 Weapon Main Mint Decavitator 2D Current.png",
+      "path": "assets/weapons/splatana-4.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/02/S3_Weapon_Main_Mint_Decavitator_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-5",
+      "displayNameEn": "Charcoal Decavitator",
+      "title": "File:S3 Weapon Main Charcoal Decavitator 2D Current.png",
+      "path": "assets/weapons/splatana-5.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/20/S3_Weapon_Main_Charcoal_Decavitator_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-6",
+      "displayNameEn": "Order Splatana Replica",
+      "title": "File:S3 Weapon Main Order Splatana Replica 2D Current.png",
+      "path": "assets/weapons/splatana-6.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/22/S3_Weapon_Main_Order_Splatana_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    }
+  ],
+  "missing": []
+}

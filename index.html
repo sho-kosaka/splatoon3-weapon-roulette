@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="スプラトゥーン3のプライベートマッチ向けシンプル武器縛りルーレット" />
+    <title>ブキ縛りプラベ・ルーレット</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="ink-bg" aria-hidden="true"></div>
+    <main class="app-shell">
+      <section class="hero card">
+        <div>
+          <p class="eyebrow">Splatoon 3 Private Match Tool</p>
+          <h1>ブキ縛りプラベ・ルーレット</h1>
+          <p class="lead">参加者を入れて、縛りを選んで、次の試合のブキを一発決定。Discordに貼りやすい結果まで作ります。</p>
+        </div>
+      </section>
+
+      <section class="grid-layout">
+        <aside class="control-panel card">
+          <div class="section-header">
+            <span class="step">01</span>
+            <div>
+              <h2>参加者</h2>
+              <p>1人用は単体ブキ履歴モード、8人用は参加者割り当てモードに切り替わります。</p>
+            </div>
+          </div>
+          <textarea id="playersInput" rows="8" spellcheck="false">プレイヤー1
+プレイヤー2
+プレイヤー3
+プレイヤー4
+プレイヤー5
+プレイヤー6
+プレイヤー7
+プレイヤー8</textarea>
+          <div class="quick-actions">
+            <button class="ghost-btn" data-sample="1">1人用サンプル</button>
+            <button class="ghost-btn" data-sample="8">8人用サンプル</button>
+            <button class="ghost-btn" id="clearPlayersBtn">クリア</button>
+          </div>
+
+          <div class="section-header compact">
+            <span class="step">02</span>
+            <div>
+              <h2>縛り</h2>
+              <p>ブキ種と重複ルールだけに絞ったシンプル版です。</p>
+            </div>
+          </div>
+          <div class="rule-row">
+            <label class="switch">
+              <input id="noDuplicateWeapons" type="checkbox" checked />
+              <span></span>
+              ブキ重複なし
+            </label>
+            <label class="switch">
+              <input id="includeOrderWeapons" type="checkbox" checked />
+              <span></span>
+              オーダー武器を含める
+            </label>
+          </div>
+          <div class="type-toolbar">
+            <button class="ghost-btn" id="selectAllTypesBtn">全ブキON</button>
+            <button class="ghost-btn" id="clearTypesBtn">全ブキOFF</button>
+          </div>
+          <div id="typeFilters" class="type-filters" aria-label="ブキ種フィルター"></div>
+          <p id="candidateCounter" class="counter-text">候補ブキを計算中...</p>
+
+          <div class="section-header compact">
+            <span class="step">仕様</span>
+            <div>
+              <h2>ルーレット仕様</h2>
+              <p>1人用は履歴抽選、8人用は参加者割り当てとして自動で切り替わります。</p>
+            </div>
+          </div>
+          <label class="switch auto-mark-row">
+            <input id="autoMarkDrawnWeapon" type="checkbox" checked />
+            <span></span>
+            選ばれたブキを自動で使用済みにする（右リストのチェックを外す）
+          </label>
+        </aside>
+
+        <section class="roulette-panel card">
+          <div class="section-header draw-header">
+            <span class="step">03</span>
+            <div>
+              <h2>抽選</h2>
+              <p>プラベのテンポを止めないよう、結果は即共有できます。</p>
+            </div>
+            <div class="header-actions">
+              <button class="ghost-btn" id="backToSettingsBtn" hidden>設定に戻る</button>
+              <button class="primary-btn" id="drawBtn">抽選する</button>
+              <button class="secondary-btn" id="copyBtn" disabled>結果コピー</button>
+            </div>
+          </div>
+
+          <div class="roulette-workbench">
+            <div class="roulette-stage-area">
+              <div class="roulette-display" id="rouletteDisplay" aria-live="polite">
+                <span class="display-label">READY?</span>
+              </div>
+            </div>
+            <aside class="weapon-library" aria-label="ブキ個別リスト">
+              <div class="weapon-library-head">
+                <div>
+                  <h3>ブキリスト</h3>
+                  <p>右側でブキ種ごと・個別に抽選対象を整理できます。</p>
+                </div>
+                <label class="mini-toggle">
+                  <input id="compactWeaponList" type="checkbox" />
+                  <span></span>
+                  写真OFF
+                </label>
+              </div>
+              <div class="weapon-library-actions">
+                <button class="ghost-btn small" id="enableAllWeaponsBtn">全ブキON</button>
+                <button class="ghost-btn small" id="disableAllWeaponsBtn">全ブキOFF</button>
+                <button class="ghost-btn small" id="collapseAllWeaponGroupsBtn">全トグル収納</button>
+              </div>
+              <div id="weaponList" class="weapon-list"></div>
+            </aside>
+          </div>
+
+          <div id="errorBox" class="error-box" hidden></div>
+
+          <div class="result-toolbar">
+            <span id="ruleSummary">対象: 全ブキ種 / ブキ重複なし</span>
+          </div>
+          <div id="results" class="results empty">
+            ここに抽選結果が表示されます。
+          </div>
+          <div id="singleHistory" class="single-history" hidden></div>
+        </section>
+      </section>
+
+    </main>
+    <div id="copyToast" class="copy-toast" role="status" aria-live="polite" hidden></div>
+    <script src="./src/app.bundle.js"></script>
+  </body>
+</html>

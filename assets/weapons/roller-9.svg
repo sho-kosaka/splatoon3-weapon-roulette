@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300" role="img" aria-label="ヴァリアブルローラーフォイル">
+  <defs>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dfff12"/><stop offset="1" stop-color="#7dff2a"/></linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fbff"/><stop offset=".45" stop-color="#8b93a7"/><stop offset="1" stop-color="#252838"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#000" flood-opacity=".4"/></filter>
+  </defs>
+  <rect width="360" height="300" rx="42" fill="#11131e"/>
+  <circle cx="294" cy="62" r="92" fill="#dfff12" opacity=".16"/>
+  <circle cx="64" cy="246" r="74" fill="#7dff2a" opacity=".14"/>
+  <g filter="url(#shadow)"><rect x="80" y="118" width="210" height="58" rx="28" fill="url(#metal)"/><rect x="110" y="96" width="52" height="120" rx="24" fill="url(#ink)" transform="rotate(-18 136 156)"/></g>
+  
+  <text x="180" y="264" text-anchor="middle" font-family="Arial, 'Noto Sans JP', sans-serif" font-size="22" font-weight="900" fill="#fff">ヴァリアブルローラーフォイル</text>
+  <text x="180" y="286" text-anchor="middle" font-family="Arial, 'Noto Sans JP', sans-serif" font-size="14" font-weight="800" fill="#dfff12">ローラー</text>
+</svg>
