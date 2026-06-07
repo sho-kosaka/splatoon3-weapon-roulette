@@ -16,7 +16,9 @@ https://sho-kosaka.github.io/splatoon3-weapon-roulette/
 - 参加者全員分のブキを一括抽選できる
 - 参加者人数分のルーレットカードが同時に高速回転する
 - 停止時に全カードが文字なしの光輪・閃光エフェクトで確定する
-- 結果カードにも武器画像を表示する
+- 効果音ON/OFFと音量調整ができる
+- `assets/sounds/` に手元のSEファイルを置くと、回転中・決定時にその音を再生できる
+- 確定後のルーレット表示にも武器画像を残す
 - 結果をDiscordなどへ貼りやすいテキストでコピーできる
 - スマホでも操作しやすいレスポンシブUI
 - 抽選ロジックは `src/roulette.js` に分離し、自動テストで検証
@@ -30,6 +32,24 @@ https://sho-kosaka.github.io/splatoon3-weapon-roulette/
 4. 「抽選する」を押す
 5. 人数分のルーレットが同時に回り、約2秒後に光輪・閃光エフェクトで止まる
 6. 必要なら「結果コピー」でDiscordや通話チャットに貼る
+
+## 効果音について
+
+画面左側の「ルーレット効果音ON」と音量スライダーで、抽選中の音を切り替えられます。
+
+ゲーム内SEなど、手元で利用できる音声ファイルを使いたい場合は、以下の名前で配置してください。
+
+```text
+assets/sounds/roulette-loop.mp3  ルーレットが回っている間のループ音
+assets/sounds/result-se.mp3      決まった瞬間のSE
+```
+
+注意:
+
+- このフォルダにはゲーム内SEそのものは同梱していません。
+- 著作権のある音声は、権利と利用範囲を確認したうえで、個人利用・身内利用の範囲で配置してください。
+- 上記ファイルが未配置、または再生できない場合は、ブラウザ内で生成する代替のカチカチ音・決定音が鳴ります。
+- mp3以外の拡張子を使う場合は、`src/main.js` の `customSoundPaths` を変更してから `npm run build:bundle` を実行してください。
 
 ローカルサーバーで開く場合:
 
@@ -88,6 +108,7 @@ src/roulette.js                     武器データ、抽選ロジック
 src/app.bundle.js                   file://直開き用の結合済みJS
 src/styles.css                      デザイン、同時ルーレット、光輪・閃光CSS
 assets/weapons/*.png                武器画像 141枚
+assets/sounds/README.md             効果音ファイル配置メモ
 assets/weapons/official-image-manifest.json 画像取得元マニフェスト
 scripts/download-official-assets.py 公式由来PNG取得スクリプト
 scripts/generate-assets.mjs         旧SVGプレースホルダー生成スクリプト

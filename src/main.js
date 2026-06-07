@@ -37,6 +37,8 @@ const els = {
   noDuplicateWeapons: document.querySelector('#noDuplicateWeapons'),
   includeOrderWeapons: document.querySelector('#includeOrderWeapons'),
   autoMarkDrawnWeapon: document.querySelector('#autoMarkDrawnWeapon'),
+  soundEffectsEnabled: document.querySelector('#soundEffectsEnabled'),
+  soundVolume: document.querySelector('#soundVolume'),
   candidateCounter: document.querySelector('#candidateCounter'),
   ruleSummary: document.querySelector('#ruleSummary'),
   drawBtn: document.querySelector('#drawBtn'),
@@ -62,6 +64,231 @@ const samples = {
   1: ['プレイヤー1'],
   8: ['プレイヤー1', 'プレイヤー2', 'プレイヤー3', 'プレイヤー4', 'プレイヤー5', 'プレイヤー6', 'プレイヤー7', 'プレイヤー8'],
 };
+
+const soundState = {
+  context: null,
+  masterGain: null,
+  rouletteAudio: null,
+  resultAudio: null,
+  rouletteTimerId: null,
+  rouletteStep: 0,
+  runId: 0,
+};
+
+const customSoundPaths = {
+  roulette: 'assets/sounds/roulette-loop.mp3',
+  result: 'assets/sounds/result-se.mp3',
+};
+
+function soundVolume() {
+  return Math.max(0, Math.min(1, Number(els.soundVolume?.value ?? 55) / 100));
+}
+
+function soundEnabled() {
+  return Boolean(els.soundEffectsEnabled?.checked) && soundVolume() > 0;
+}
+
+function ensureAudioContext() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext || !soundEnabled()) return null;
+  if (!soundState.context) {
+    soundState.context = new AudioContext();
+    soundState.masterGain = soundState.context.createGain();
+    soundState.masterGain.connect(soundState.context.destination);
+  }
+  soundState.masterGain.gain.setTargetAtTime(soundVolume(), soundState.context.currentTime, 0.02);
+  if (soundState.context.state === 'suspended') soundState.context.resume();
+  return soundState.context;
+}
+
+function playTone({ frequency = 880, duration = 0.06, type = 'square', gain = 0.18, detune = 0, startDelay = 0 }) {
+  const context = ensureAudioContext();
+  if (!context || !soundState.masterGain) return;
+  const startAt = context.currentTime + startDelay;
+  const oscillator = context.createOscillator();
+  const envelope = context.createGain();
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency, startAt);
+  oscillator.detune.setValueAtTime(detune, startAt);
+  envelope.gain.setValueAtTime(0.0001, startAt);
+  envelope.gain.exponentialRampToValueAtTime(Math.max(0.0001, gain), startAt + 0.006);
+  envelope.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+  oscillator.connect(envelope);
+  envelope.connect(soundState.masterGain);
+  oscillator.start(startAt);
+  oscillator.stop(startAt + duration + 0.02);
+}
+
+function createCustomAudio(kind, { loop = false } = {}) {
+  const audio = new Audio(customSoundPaths[kind]);
+  audio.preload = 'auto';
+  audio.loop = loop;
+  audio.volume = soundVolume();
+  return audio;
+}
+
+function syncCustomAudioVolume() {
+  const volume = soundVolume();
+  if (soundState.rouletteAudio) soundState.rouletteAudio.volume = volume;
+  if (soundState.resultAudio) soundState.resultAudio.volume = volume;
+}
+
+function isCurrentSoundRun(runId) {
+  return runId === soundState.runId;
+}
+
+function startSyntheticRouletteTicks(runId) {
+  if (!isCurrentSoundRun(runId) || !state.isSpinning || !soundEnabled()) return;
+  soundState.rouletteStep = 0;
+  playRouletteTick(runId);
+  soundState.rouletteTimerId = window.setInterval(() => playRouletteTick(runId), 86);
+}
+
+function tryPlayCustomRouletteSound(runId) {
+  if (!soundEnabled()) return false;
+  if (!soundState.rouletteAudio) soundState.rouletteAudio = createCustomAudio('roulette', { loop: true });
+  const audio = soundState.rouletteAudio;
+  syncCustomAudioVolume();
+  audio.currentTime = 0;
+  const playPromise = audio.play();
+  let settled = false;
+  const lateStartGuard = window.setTimeout(() => {
+    if (settled || !isCurrentSoundRun(runId)) return;
+    settled = true;
+    audio.pause();
+    audio.currentTime = 0;
+    if (state.isSpinning && soundEnabled() && !soundState.rouletteTimerId) {
+      const fallbackRunId = ++soundState.runId;
+      startSyntheticRouletteTicks(fallbackRunId);
+    }
+  }, 700);
+  if (playPromise?.then) {
+    playPromise.then(() => {
+      if (settled) {
+        audio.pause();
+        audio.currentTime = 0;
+        return;
+      }
+      settled = true;
+      window.clearTimeout(lateStartGuard);
+      if (!isCurrentSoundRun(runId) || !state.isSpinning || !soundEnabled()) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    }).catch(() => {
+      if (settled) {
+        audio.pause();
+        audio.currentTime = 0;
+        return;
+      }
+      settled = true;
+      window.clearTimeout(lateStartGuard);
+      if (isCurrentSoundRun(runId) && state.isSpinning && !soundState.rouletteTimerId) startSyntheticRouletteTicks(runId);
+    });
+  }
+  return true;
+}
+
+function playCustomResultSound(runId) {
+  if (!soundEnabled()) return false;
+  if (!soundState.resultAudio) soundState.resultAudio = createCustomAudio('result');
+  const audio = soundState.resultAudio;
+  syncCustomAudioVolume();
+  audio.currentTime = 0;
+  const playPromise = audio.play();
+  let settled = false;
+  const lateStartGuard = window.setTimeout(() => {
+    if (settled || !isCurrentSoundRun(runId)) return;
+    settled = true;
+    audio.pause();
+    audio.currentTime = 0;
+    soundState.runId += 1;
+    if (soundEnabled()) playSyntheticResultSound();
+  }, 700);
+  if (playPromise?.then) {
+    playPromise.then(() => {
+      if (settled) {
+        audio.pause();
+        audio.currentTime = 0;
+        return;
+      }
+      settled = true;
+      window.clearTimeout(lateStartGuard);
+      if (!isCurrentSoundRun(runId) || !soundEnabled()) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    }).catch(() => {
+      if (settled) {
+        audio.pause();
+        audio.currentTime = 0;
+        return;
+      }
+      settled = true;
+      window.clearTimeout(lateStartGuard);
+      if (isCurrentSoundRun(runId) && soundEnabled()) playSyntheticResultSound();
+    });
+  }
+  return true;
+}
+
+function playRouletteTick(runId = soundState.runId) {
+  if (!isCurrentSoundRun(runId) || !state.isSpinning || !soundEnabled()) return;
+  const sequence = [740, 820, 920, 1040, 980, 860];
+  const frequency = sequence[soundState.rouletteStep % sequence.length];
+  soundState.rouletteStep += 1;
+  playTone({ frequency, duration: 0.035, type: 'square', gain: 0.09 });
+  playTone({ frequency: frequency * 1.48, duration: 0.018, type: 'triangle', gain: 0.045, startDelay: 0.012 });
+}
+
+function startRouletteSound() {
+  stopAllSounds();
+  if (!soundEnabled()) return;
+  const runId = ++soundState.runId;
+  if (!tryPlayCustomRouletteSound(runId)) startSyntheticRouletteTicks(runId);
+}
+
+function stopRouletteSound({ invalidate = true } = {}) {
+  if (invalidate) soundState.runId += 1;
+  if (soundState.rouletteTimerId) {
+    window.clearInterval(soundState.rouletteTimerId);
+    soundState.rouletteTimerId = null;
+  }
+  if (soundState.rouletteAudio) {
+    soundState.rouletteAudio.pause();
+    soundState.rouletteAudio.currentTime = 0;
+  }
+}
+
+function stopResultSound({ invalidate = true } = {}) {
+  if (invalidate) soundState.runId += 1;
+  if (soundState.resultAudio) {
+    soundState.resultAudio.pause();
+    soundState.resultAudio.currentTime = 0;
+  }
+}
+
+function stopAllSounds() {
+  soundState.runId += 1;
+  stopRouletteSound({ invalidate: false });
+  stopResultSound({ invalidate: false });
+}
+
+function playSyntheticResultSound() {
+  if (!soundEnabled()) return;
+  [0, 0.055, 0.11].forEach((delay, index) => {
+    playTone({ frequency: [660, 990, 1320][index], duration: 0.12, type: 'triangle', gain: 0.15, startDelay: delay });
+  });
+  playTone({ frequency: 1980, duration: 0.18, type: 'sine', gain: 0.11, startDelay: 0.16 });
+}
+
+function playResultSound() {
+  if (!soundEnabled()) return;
+  stopRouletteSound();
+  stopResultSound({ invalidate: false });
+  const runId = ++soundState.runId;
+  if (!playCustomResultSound(runId)) playSyntheticResultSound();
+}
 
 function preloadWeaponImages() {
   for (const weapon of weapons) {
@@ -256,7 +483,7 @@ function updateSummary() {
   const orderCount = candidates.filter((weapon) => weapon.isOrder).length;
   const excludedCount = state.excludedWeaponIds.size;
   state.latestRuleSummary = `${state.drawMode === 'single' ? '1ブキずつ' : '参加者へ配る'} / ${summary}`;
-  els.ruleSummary.textContent = state.latestRuleSummary;
+  if (els.ruleSummary) els.ruleSummary.textContent = state.latestRuleSummary;
   els.candidateCounter.textContent = `候補ブキ: ${candidates.length} / ${weapons.length}　除外: ${excludedCount}　使用済み: ${state.drawnWeaponIds.size}　オーダー: ${orderCount}　参加者: ${playerCheck.players.length}人`;
 
   if (state.selectedTypes.size === 0) {
@@ -276,6 +503,7 @@ function updateSummary() {
 }
 
 function renderResults(assignments) {
+  if (!els.results) return;
   if (!assignments.length) {
     els.results.className = 'results empty';
     els.results.textContent = state.drawMode === 'single' ? '1ブキ抽選の結果がここに表示されます。' : 'ここに抽選結果が表示されます。';
@@ -297,6 +525,7 @@ function renderResults(assignments) {
 }
 
 function renderSingleHistory() {
+  if (!els.singleHistory) return;
   if (!state.singleHistory.length) {
     els.singleHistory.hidden = true;
     els.singleHistory.innerHTML = '';
@@ -340,6 +569,7 @@ function rouletteMarkup(weapon, label) {
 function clearSpinTimers() {
   state.spinTimers.forEach((timerId) => window.clearTimeout(timerId));
   state.spinTimers = [];
+  stopRouletteSound();
 }
 
 function setControlsDisabled(disabled) {
@@ -351,6 +581,8 @@ function setControlsDisabled(disabled) {
   els.noDuplicateWeapons.disabled = disabled || state.drawMode === 'single';
   els.includeOrderWeapons.disabled = disabled;
   els.autoMarkDrawnWeapon.disabled = disabled;
+  if (els.soundEffectsEnabled) els.soundEffectsEnabled.disabled = disabled;
+  if (els.soundVolume) els.soundVolume.disabled = disabled;
   els.selectAllTypesBtn.disabled = disabled;
   els.clearTypesBtn.disabled = disabled;
   els.clearPlayersBtn.disabled = disabled;
@@ -396,6 +628,7 @@ function updateSlot(slot, weapon) {
 
 function finishPlayerRoulettes(slots, assignments) {
   clearSpinTimers();
+  playResultSound();
   slots.forEach((slot, index) => {
     updateSlot(slot, assignments[index].weapon);
     slot.classList.remove('spinning');
@@ -425,6 +658,7 @@ function animatePlayerRoulettes(candidates, assignments) {
   clearSpinTimers();
   state.isSpinning = true;
   setControlsDisabled(true);
+  startRouletteSound();
 
   const slots = [...els.rouletteDisplay.querySelectorAll('.player-roulette')];
   const totalTicks = 38;
@@ -458,6 +692,7 @@ function animatePlayerRoulettes(candidates, assignments) {
 function animateRoulette(candidates, finalWeapon, onFinish) {
   state.isSpinning = true;
   setControlsDisabled(true);
+  startRouletteSound();
   els.rouletteDisplay.className = 'roulette-display single spinning';
 
   let ticks = 0;
@@ -469,6 +704,7 @@ function animateRoulette(candidates, finalWeapon, onFinish) {
     ticks += 1;
     intervalMs = Math.min(120, intervalMs + 3);
     if (ticks >= maxTicks) {
+      playResultSound();
       els.rouletteDisplay.classList.remove('spinning');
       els.rouletteDisplay.classList.add('locked', 'baban-screen');
       els.rouletteDisplay.innerHTML = `${rouletteMarkup(finalWeapon, 'RESULT')}<span class="impact-effect single-impact" aria-hidden="true"><i></i><b></b><em></em></span>`;
@@ -704,6 +940,16 @@ els.collapseAllWeaponGroupsBtn?.addEventListener('click', () => {
 els.noDuplicateWeapons.addEventListener('change', updateSummary);
 els.includeOrderWeapons.addEventListener('change', updateSummary);
 els.autoMarkDrawnWeapon.addEventListener('change', updateSummary);
+els.soundEffectsEnabled?.addEventListener('change', () => {
+  if (!els.soundEffectsEnabled.checked) stopAllSounds();
+});
+els.soundVolume?.addEventListener('input', () => {
+  syncCustomAudioVolume();
+  if (soundState.masterGain && soundState.context) {
+    soundState.masterGain.gain.setTargetAtTime(soundVolume(), soundState.context.currentTime, 0.02);
+  }
+  if (!soundEnabled()) stopAllSounds();
+});
 els.playersInput.addEventListener('input', () => {
   syncModeFromPlayers();
   updateSummary();

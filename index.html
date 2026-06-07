@@ -79,6 +79,18 @@
             <span></span>
             選ばれたブキを自動で使用済みにする（右リストのチェックを外す）
           </label>
+          <div class="sound-settings" aria-label="効果音設定">
+            <label class="switch sound-switch">
+              <input id="soundEffectsEnabled" type="checkbox" checked />
+              <span></span>
+              ルーレット効果音ON
+            </label>
+            <label class="volume-control">
+              <span>音量</span>
+              <input id="soundVolume" type="range" min="0" max="100" value="55" />
+            </label>
+            <p>手元のSEファイルを置くとそれを再生します。未配置なら代替のカチカチ音で鳴ります。</p>
+          </div>
         </aside>
 
         <section class="roulette-panel card">
@@ -124,13 +136,8 @@
 
           <div id="errorBox" class="error-box" hidden></div>
 
-          <div class="result-toolbar">
-            <span id="ruleSummary">対象: 全ブキ種 / ブキ重複なし</span>
-          </div>
-          <div id="results" class="results empty">
-            ここに抽選結果が表示されます。
-          </div>
           <div id="singleHistory" class="single-history" hidden></div>
+
         </section>
       </section>
 
