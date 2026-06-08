@@ -28,6 +28,14 @@
   - `X Battle (S2-)`: 旧シーズンの参考値として `xMatchLegacyGroup` に保存
   - `X Battle (MR)`: stat.ink API の `matching_range` と照合
 
+## 画像準拠の射程ラベル
+
+- Source: ユーザー提示の6段分類画像
+- Image URL: https://cdn-ak.f.st-hatena.com/images/fotolife/m/meshinekogame/20260320/20260320152113.png
+- 用途: `xMatchRangeLabel`
+- 採用内容: 画像内の行ラベル `短射程` / `短中射程` / `中射程` / `中長射程` / `長射程` / `超長射程`
+- 注意: 記事本文や推測ではなく、画像上の配置を正としてメインブキ単位で反映。亜種・レプリカ・3種目は同じメインブキのラベルを継承。
+
 ## Xマッチ仕様の公式確認
 
 - Source: Nintendo official Splatoon 3 “How X Battles work”
@@ -50,3 +58,4 @@
 - このアプリのUIでは従来どおり `リールガン` 系を `シューター` カテゴリに含めています。
 - `xMatchGroup` は `S`, `M`, `L`, `C` の4値です。
 - `xMatchLegacyGroup` は `X Battle (S2-)` に値があるブキだけ保持し、現行追加ブキなど値がない場合は `null` として扱います。
+- `xMatchRangeLabel` はユーザー提示画像に合わせた6値です。例: `エクスプロッシャー` 系は `長射程` として扱います。

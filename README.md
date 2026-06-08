@@ -12,7 +12,7 @@ https://sho-kosaka.github.io/splatoon3-weapon-roulette/
 - ブキ種を選択して抽選対象を絞れる
 - ブキ重複なし / ありを切り替えられる
 - オーダー武器を抽選に含める / 含めないを切り替えられる
-- 武器データに `武器種区分`、`オーダー武器フラグ`、`Xマッチ射程グループ`、`Matching Range`、`PNG画像パス` を持たせる
+- 武器データに `武器種区分`、`オーダー武器フラグ`、`Xマッチ射程グループ`、`画像準拠の射程ラベル`、`Matching Range`、`PNG画像パス` を持たせる
 - 参加者全員分のブキを一括抽選できる
 - 参加者人数分のルーレットカードが同時に高速回転する
 - 停止時に全カードが文字なしの光輪・閃光エフェクトで確定する
@@ -81,6 +81,7 @@ http://127.0.0.1:5173
 - ブキ総数・現行リスト確認: Inkipedia / Splatoon Wiki `List of main weapons in Splatoon 3`
 - 日本語名、英語名、`statInkKey`、`matchingRange`: stat.ink `GET /api/v3/weapon?full=1`
 - Xマッチ射程グループ: stat.ink `API Info: Weapons (Splatoon 3)` の `X Battle (S6-)` と `Matching Range`
+- 画像準拠の射程ラベル: ユーザー提示の6段分類画像を正として `xMatchRangeLabel` に反映
 - 旧Xマッチグループ参考値: stat.ink `API Info: Weapons (Splatoon 3)` の `X Battle (S2-)`
 - Xマッチが類似ロードアウトでマッチングすることの確認: Nintendo公式 Splatoon 3 “How X Battles work”
 

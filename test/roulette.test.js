@@ -32,6 +32,7 @@ test('buildWeapons creates stable ids, type metadata, order flag, and image path
     xMatchGroup: null,
     xMatchLegacyGroup: null,
     matchingRange: null,
+    xMatchRangeLabel: null,
     imagePath: './assets/weapons/shooter-0.png',
   });
   assert.equal(weapons[1].isOrder, true);
@@ -51,6 +52,7 @@ test('default weapon list contains normal and order weapons with required fields
     assert.equal(typeof weapon.statInkKey, 'string');
     assert.match(weapon.xMatchGroup, /^(S|M|L|C)$/);
     assert.equal(typeof weapon.matchingRange, 'number');
+    assert.match(weapon.xMatchRangeLabel, /^(短射程|短中射程|中射程|中長射程|長射程|超長射程)$/);
     assert.match(weapon.imagePath, /^\.\/assets\/weapons\/.+\.png$/);
   }
 });
