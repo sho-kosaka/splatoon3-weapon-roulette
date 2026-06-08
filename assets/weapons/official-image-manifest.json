@@ -1,7 +1,9 @@
 {
   "source": "Inkipedia MediaWiki API / S3 Weapon Main * 2D Current.png",
-  "rightsNote": "Images are Nintendo-owned Splatoon 3 weapon renders mirrored by Inkipedia. Intended for local non-commercial fan use only.",
-  "downloadedCount": 141,
+  "apiUrl": "https://splatoonwiki.org/w/api.php",
+  "retrievedAt": "2026-06-08T17:04:04.814389+00:00",
+  "rightsNote": "Images are Nintendo-owned Splatoon 3 weapon renders mirrored by Inkipedia. This repository publishes them for a non-commercial fan tool at the user's request.",
+  "downloadedCount": 173,
   "missingCount": 0,
   "items": [
     {
@@ -295,6 +297,106 @@
       "mime": "image/png"
     },
     {
+      "id": "shooter-29",
+      "displayNameEn": "Clawz .96 Gal",
+      "title": "File:S3 Weapon Main Clawz .96 Gal 2D Current.png",
+      "path": "assets/weapons/shooter-29.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/00/S3_Weapon_Main_Clawz_.96_Gal_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-30",
+      "displayNameEn": "Hero Shot Replica",
+      "title": "File:S3 Weapon Main Hero Shot Replica 2D Current.png",
+      "path": "assets/weapons/shooter-30.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/8f/S3_Weapon_Main_Hero_Shot_Replica_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-31",
+      "displayNameEn": "Jet Squelcher COB-R",
+      "title": "File:S3 Weapon Main Jet Squelcher COB-R 2D Current.png",
+      "path": "assets/weapons/shooter-31.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/15/S3_Weapon_Main_Jet_Squelcher_COB-R_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-32",
+      "displayNameEn": "Octo Shot Replica",
+      "title": "File:S3 Weapon Main Octo Shot Replica 2D Current.png",
+      "path": "assets/weapons/shooter-32.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b8/S3_Weapon_Main_Octo_Shot_Replica_2D_Current.png",
+      "width": 400,
+      "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-33",
+      "displayNameEn": "Splattershot Pro FRZ-N",
+      "title": "File:S3 Weapon Main Splattershot Pro FRZ-N 2D Current.png",
+      "path": "assets/weapons/shooter-33.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/ce/S3_Weapon_Main_Splattershot_Pro_FRZ-N_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-34",
+      "displayNameEn": "Colorz Aerospray",
+      "title": "File:S3 Weapon Main Colorz Aerospray 2D Current.png",
+      "path": "assets/weapons/shooter-34.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/49/S3_Weapon_Main_Colorz_Aerospray_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-35",
+      "displayNameEn": "Splash-o-matic GCK-O",
+      "title": "File:S3 Weapon Main Splash-o-matic GCK-O 2D Current.png",
+      "path": "assets/weapons/shooter-35.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/d/d5/S3_Weapon_Main_Splash-o-matic_GCK-O_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-36",
+      "displayNameEn": "Glamorz Splattershot",
+      "title": "File:S3 Weapon Main Glamorz Splattershot 2D Current.png",
+      "path": "assets/weapons/shooter-36.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/b6/S3_Weapon_Main_Glamorz_Splattershot_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-37",
+      "displayNameEn": "H-3 Nozzlenose VIP-R",
+      "title": "File:S3 Weapon Main H-3 Nozzlenose VIP-R 2D Current.png",
+      "path": "assets/weapons/shooter-37.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/54/S3_Weapon_Main_H-3_Nozzlenose_VIP-R_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "shooter-38",
+      "displayNameEn": "Glitterz L-3 Nozzlenose",
+      "title": "File:S3 Weapon Main Glitterz L-3 Nozzlenose 2D Current.png",
+      "path": "assets/weapons/shooter-38.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/6/68/S3_Weapon_Main_Glitterz_L-3_Nozzlenose_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
       "id": "roller-0",
       "displayNameEn": "Splat Roller",
       "title": "File:S3 Weapon Main Splat Roller 2D Current.png",
@@ -402,6 +504,36 @@
       "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/fb/S3_Weapon_Main_Order_Roller_Replica_2D_Current.png",
       "width": 400,
       "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-11",
+      "displayNameEn": "Carbon Roller ANG-L",
+      "title": "File:S3 Weapon Main Carbon Roller ANG-L 2D Current.png",
+      "path": "assets/weapons/roller-11.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/48/S3_Weapon_Main_Carbon_Roller_ANG-L_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-12",
+      "displayNameEn": "Starz Dynamo Roller",
+      "title": "File:S3 Weapon Main Starz Dynamo Roller 2D Current.png",
+      "path": "assets/weapons/roller-12.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e1/S3_Weapon_Main_Starz_Dynamo_Roller_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "roller-13",
+      "displayNameEn": "Planetz Big Swig Roller",
+      "title": "File:S3 Weapon Main Planetz Big Swig Roller 2D Current.png",
+      "path": "assets/weapons/roller-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/85/S3_Weapon_Main_Planetz_Big_Swig_Roller_2D_Current.png",
+      "width": 256,
+      "height": 256,
       "mime": "image/png"
     },
     {
@@ -575,6 +707,26 @@
       "mime": "image/png"
     },
     {
+      "id": "charger-17",
+      "displayNameEn": "Splat Charger CAM-O",
+      "title": "File:S3 Weapon Main Splat Charger CAM-O 2D Current.png",
+      "path": "assets/weapons/charger-17.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/80/S3_Weapon_Main_Splat_Charger_CAM-O_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "charger-18",
+      "displayNameEn": "Splatterscope CAM-O",
+      "title": "File:S3 Weapon Main Splatterscope CAM-O 2D Current.png",
+      "path": "assets/weapons/charger-18.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/5c/S3_Weapon_Main_Splatterscope_CAM-O_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
       "id": "slosher-0",
       "displayNameEn": "Slosher",
       "title": "File:S3 Weapon Main Slosher 2D Current.png",
@@ -702,6 +854,26 @@
       "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/51/S3_Weapon_Main_Order_Slosher_Replica_2D_Current.png",
       "width": 400,
       "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-13",
+      "displayNameEn": "Tri-Slosher ASH-N",
+      "title": "File:S3 Weapon Main Tri-Slosher ASH-N 2D Current.png",
+      "path": "assets/weapons/slosher-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/1/1d/S3_Weapon_Main_Tri-Slosher_ASH-N_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "slosher-14",
+      "displayNameEn": "Hornz Dread Wringer",
+      "title": "File:S3 Weapon Main Hornz Dread Wringer 2D Current.png",
+      "path": "assets/weapons/slosher-14.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/52/S3_Weapon_Main_Hornz_Dread_Wringer_2D_Current.png",
+      "width": 256,
+      "height": 256,
       "mime": "image/png"
     },
     {
@@ -835,6 +1007,26 @@
       "mime": "image/png"
     },
     {
+      "id": "splatling-13",
+      "displayNameEn": "Torrentz Hydra Splatling",
+      "title": "File:S3 Weapon Main Torrentz Hydra Splatling 2D Current.png",
+      "path": "assets/weapons/splatling-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/48/S3_Weapon_Main_Torrentz_Hydra_Splatling_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatling-14",
+      "displayNameEn": "Mini Splatling RTL-R",
+      "title": "File:S3 Weapon Main Mini Splatling RTL-R 2D Current.png",
+      "path": "assets/weapons/splatling-14.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/45/S3_Weapon_Main_Mini_Splatling_RTL-R_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
       "id": "dualies-0",
       "displayNameEn": "Splat Dualies",
       "title": "File:S3 Weapon Main Splat Dualies 2D Current.png",
@@ -965,6 +1157,36 @@
       "mime": "image/png"
     },
     {
+      "id": "dualies-13",
+      "displayNameEn": "Hoofz Dualie Squelchers",
+      "title": "File:S3 Weapon Main Hoofz Dualie Squelchers 2D Current.png",
+      "path": "assets/weapons/dualies-13.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/e/e1/S3_Weapon_Main_Hoofz_Dualie_Squelchers_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-14",
+      "displayNameEn": "Twinklez Splat Dualies",
+      "title": "File:S3 Weapon Main Twinklez Splat Dualies 2D Current.png",
+      "path": "assets/weapons/dualies-14.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/46/S3_Weapon_Main_Twinklez_Splat_Dualies_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "dualies-15",
+      "displayNameEn": "Dapple Dualies NOC-T",
+      "title": "File:S3 Weapon Main Dapple Dualies NOC-T 2D Current.png",
+      "path": "assets/weapons/dualies-15.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/0b/S3_Weapon_Main_Dapple_Dualies_NOC-T_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
       "id": "brella-0",
       "displayNameEn": "Splat Brella",
       "title": "File:S3 Weapon Main Splat Brella 2D Current.png",
@@ -1052,6 +1274,26 @@
       "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/7f/S3_Weapon_Main_Order_Brella_Replica_2D_Current.png",
       "width": 400,
       "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-9",
+      "displayNameEn": "Tenta Brella CRE-M",
+      "title": "File:S3 Weapon Main Tenta Brella CRE-M 2D Current.png",
+      "path": "assets/weapons/brella-9.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/4/48/S3_Weapon_Main_Tenta_Brella_CRE-M_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brella-10",
+      "displayNameEn": "Patternz Undercover Brella",
+      "title": "File:S3 Weapon Main Patternz Undercover Brella 2D Current.png",
+      "path": "assets/weapons/brella-10.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/50/S3_Weapon_Main_Patternz_Undercover_Brella_2D_Current.png",
+      "width": 256,
+      "height": 256,
       "mime": "image/png"
     },
     {
@@ -1205,6 +1447,26 @@
       "mime": "image/png"
     },
     {
+      "id": "blaster-15",
+      "displayNameEn": "Gleamz Blaster",
+      "title": "File:S3 Weapon Main Gleamz Blaster 2D Current.png",
+      "path": "assets/weapons/blaster-15.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/8/8a/S3_Weapon_Main_Gleamz_Blaster_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "blaster-16",
+      "displayNameEn": "Rapid Blaster Pro WNT-R",
+      "title": "File:S3 Weapon Main Rapid Blaster Pro WNT-R 2D Current.png",
+      "path": "assets/weapons/blaster-16.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/7/78/S3_Weapon_Main_Rapid_Blaster_Pro_WNT-R_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
       "id": "brush-0",
       "displayNameEn": "Octobrush",
       "title": "File:S3 Weapon Main Octobrush 2D Current.png",
@@ -1272,6 +1534,26 @@
       "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c2/S3_Weapon_Main_Orderbrush_Replica_2D_Current.png",
       "width": 400,
       "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-7",
+      "displayNameEn": "Painbrush BRN-Z",
+      "title": "File:S3 Weapon Main Painbrush BRN-Z 2D Current.png",
+      "path": "assets/weapons/brush-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/5/58/S3_Weapon_Main_Painbrush_BRN-Z_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "brush-8",
+      "displayNameEn": "Cometz Octobrush",
+      "title": "File:S3 Weapon Main Cometz Octobrush 2D Current.png",
+      "path": "assets/weapons/brush-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/2f/S3_Weapon_Main_Cometz_Octobrush_2D_Current.png",
+      "width": 256,
+      "height": 256,
       "mime": "image/png"
     },
     {
@@ -1345,6 +1627,26 @@
       "mime": "image/png"
     },
     {
+      "id": "stringer-7",
+      "displayNameEn": "REEF-LUX 450 MIL-K",
+      "title": "File:S3 Weapon Main REEF-LUX 450 MIL-K 2D Current.png",
+      "path": "assets/weapons/stringer-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/0/0c/S3_Weapon_Main_REEF-LUX_450_MIL-K_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "stringer-8",
+      "displayNameEn": "Bulbz Tri-Stringer",
+      "title": "File:S3 Weapon Main Bulbz Tri-Stringer 2D Current.png",
+      "path": "assets/weapons/stringer-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/c/c8/S3_Weapon_Main_Bulbz_Tri-Stringer_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
       "id": "splatana-0",
       "displayNameEn": "Splatana Wiper",
       "title": "File:S3 Weapon Main Splatana Wiper 2D Current.png",
@@ -1412,6 +1714,26 @@
       "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/2/22/S3_Weapon_Main_Order_Splatana_Replica_2D_Current.png",
       "width": 400,
       "height": 400,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-7",
+      "displayNameEn": "Splatana Wiper RUS-T",
+      "title": "File:S3 Weapon Main Splatana Wiper RUS-T 2D Current.png",
+      "path": "assets/weapons/splatana-7.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/f/f5/S3_Weapon_Main_Splatana_Wiper_RUS-T_2D_Current.png",
+      "width": 256,
+      "height": 256,
+      "mime": "image/png"
+    },
+    {
+      "id": "splatana-8",
+      "displayNameEn": "Stickerz Splatana Stamper",
+      "title": "File:S3 Weapon Main Stickerz Splatana Stamper 2D Current.png",
+      "path": "assets/weapons/splatana-8.png",
+      "sourceUrl": "https://cdn.wikimg.net/en/splatoonwiki/images/b/ba/S3_Weapon_Main_Stickerz_Splatana_Stamper_2D_Current.png",
+      "width": 256,
+      "height": 256,
       "mime": "image/png"
     }
   ],

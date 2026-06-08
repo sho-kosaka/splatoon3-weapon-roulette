@@ -2,8 +2,8 @@
 """Download Splatoon 3 weapon render PNGs from Inkipedia's MediaWiki API.
 
 The images are Nintendo-owned game renders mirrored by Inkipedia. This script is
-for local, non-commercial fan-tool setup; do not hotlink and do not redistribute
-these downloaded assets in a public repository without checking rights.
+for a non-commercial fan-tool setup; do not hotlink, and check rights before
+reusing these assets elsewhere.
 """
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -23,59 +24,74 @@ USER_AGENT = "Hermes local Splatoon3 roulette asset downloader/1.0"
 # Ordered to match CATEGORY_DEFINITIONS / buildWeapons() stable ids.
 CATEGORY_FILE_NAMES = {
     "shooter": [
-        "Splattershot Jr.", "Splattershot", "N-ZAP '85", "Custom Splattershot Jr.", "Splattershot Nova",
-        "Sploosh-o-matic", "Splattershot Pro", "Tentatek Splattershot", ".52 Gal", "N-ZAP '89",
-        "Annaki Splattershot Nova", "L-3 Nozzlenose", "Neo Sploosh-o-matic", ".52 Gal Deco", "Jet Squelcher",
-        "Splash-o-matic", ".96 Gal", "Aerospray MG", "Aerospray RG", "Squeezer",
-        "L-3 Nozzlenose D", "Custom Jet Squelcher", "Forge Splattershot Pro", "Neo Splash-o-matic", ".96 Gal Deco",
-        "H-3 Nozzlenose", "Foil Squeezer", "H-3 Nozzlenose D", "Order Shot Replica",
+        "Splattershot Jr.", "Splattershot", "N-ZAP '85", "Custom Splattershot Jr.",
+        "Splattershot Nova", "Sploosh-o-matic", "Splattershot Pro", "Tentatek Splattershot",
+        ".52 Gal", "N-ZAP '89", "Annaki Splattershot Nova", "L-3 Nozzlenose",
+        "Neo Sploosh-o-matic", ".52 Gal Deco", "Jet Squelcher", "Splash-o-matic",
+        ".96 Gal", "Aerospray MG", "Aerospray RG", "Squeezer",
+        "L-3 Nozzlenose D", "Custom Jet Squelcher", "Forge Splattershot Pro", "Neo Splash-o-matic",
+        ".96 Gal Deco", "H-3 Nozzlenose", "Foil Squeezer", "H-3 Nozzlenose D",
+        "Order Shot Replica", "Clawz .96 Gal", "Hero Shot Replica", "Jet Squelcher COB-R",
+        "Octo Shot Replica", "Splattershot Pro FRZ-N", "Colorz Aerospray", "Splash-o-matic GCK-O",
+        "Glamorz Splattershot", "H-3 Nozzlenose VIP-R", "Glitterz L-3 Nozzlenose",
     ],
     "roller": [
-        "Splat Roller", "Carbon Roller", "Krak-On Splat Roller", "Dynamo Roller", "Big Swig Roller",
-        "Gold Dynamo Roller", "Big Swig Roller Express", "Flingza Roller", "Carbon Roller Deco", "Foil Flingza Roller",
-        "Order Roller Replica",
+        "Splat Roller", "Carbon Roller", "Krak-On Splat Roller", "Dynamo Roller",
+        "Big Swig Roller", "Gold Dynamo Roller", "Big Swig Roller Express", "Flingza Roller",
+        "Carbon Roller Deco", "Foil Flingza Roller", "Order Roller Replica", "Carbon Roller ANG-L",
+        "Starz Dynamo Roller", "Planetz Big Swig Roller",
     ],
     "charger": [
-        "Splat Charger", "Classic Squiffer", "Z+F Splat Charger", "Splatterscope", "New Squiffer",
-        "Snipewriter 5H", "Z+F Splatterscope", "E-liter 4K", "Snipewriter 5B", "Custom E-liter 4K",
-        "Bamboozler 14 Mk I", "Goo Tuber", "Bamboozler 14 Mk II", "E-liter 4K Scope", "Custom Goo Tuber",
-        "Custom E-liter 4K Scope", "Order Charger Replica",
+        "Splat Charger", "Classic Squiffer", "Z+F Splat Charger", "Splatterscope",
+        "New Squiffer", "Snipewriter 5H", "Z+F Splatterscope", "E-liter 4K",
+        "Snipewriter 5B", "Custom E-liter 4K", "Bamboozler 14 Mk I", "Goo Tuber",
+        "Bamboozler 14 Mk II", "E-liter 4K Scope", "Custom Goo Tuber", "Custom E-liter 4K Scope",
+        "Order Charger Replica", "Splat Charger CAM-O", "Splatterscope CAM-O",
     ],
     "slosher": [
-        "Slosher", "Tri-Slosher", "Slosher Deco", "Sloshing Machine", "Dread Wringer",
-        "Tri-Slosher Nouveau", "Dread Wringer D", "Bloblobber", "Sloshing Machine Neo", "Bloblobber Deco",
-        "Explosher", "Custom Explosher", "Order Slosher Replica",
+        "Slosher", "Tri-Slosher", "Slosher Deco", "Sloshing Machine",
+        "Dread Wringer", "Tri-Slosher Nouveau", "Dread Wringer D", "Bloblobber",
+        "Sloshing Machine Neo", "Bloblobber Deco", "Explosher", "Custom Explosher",
+        "Order Slosher Replica", "Tri-Slosher ASH-N", "Hornz Dread Wringer",
     ],
     "splatling": [
-        "Heavy Splatling", "Mini Splatling", "Heavy Edit Splatling", "Heavy Splatling Deco", "Heavy Edit Splatling Nouveau",
-        "Hydra Splatling", "Custom Hydra Splatling", "Zink Mini Splatling", "Nautilus 47", "Nautilus 79",
-        "Ballpoint Splatling", "Ballpoint Splatling Nouveau", "Order Splatling Replica",
+        "Heavy Splatling", "Mini Splatling", "Heavy Edit Splatling", "Heavy Splatling Deco",
+        "Heavy Edit Splatling Nouveau", "Hydra Splatling", "Custom Hydra Splatling", "Zink Mini Splatling",
+        "Nautilus 47", "Nautilus 79", "Ballpoint Splatling", "Ballpoint Splatling Nouveau",
+        "Order Splatling Replica", "Torrentz Hydra Splatling", "Mini Splatling RTL-R",
     ],
     "dualies": [
-        "Splat Dualies", "Dualie Squelchers", "Enperry Splat Dualies", "Dapple Dualies", "Custom Dualie Squelchers",
-        "Dark Tetra Dualies", "Glooga Dualies", "Douser Dualies FF", "Light Tetra Dualies", "Dapple Dualies Nouveau",
-        "Glooga Dualies Deco", "Custom Douser Dualies FF", "Order Dualie Replicas",
+        "Splat Dualies", "Dualie Squelchers", "Enperry Splat Dualies", "Dapple Dualies",
+        "Custom Dualie Squelchers", "Dark Tetra Dualies", "Glooga Dualies", "Douser Dualies FF",
+        "Light Tetra Dualies", "Dapple Dualies Nouveau", "Glooga Dualies Deco", "Custom Douser Dualies FF",
+        "Order Dualie Replicas", "Hoofz Dualie Squelchers", "Twinklez Splat Dualies", "Dapple Dualies NOC-T",
     ],
     "brella": [
-        "Splat Brella", "Recycled Brella 24 Mk I", "Tenta Brella", "Undercover Brella", "Sorella Brella",
-        "Recycled Brella 24 Mk II", "Tenta Sorella Brella", "Undercover Sorella Brella", "Order Brella Replica",
+        "Splat Brella", "Recycled Brella 24 Mk I", "Tenta Brella", "Undercover Brella",
+        "Sorella Brella", "Recycled Brella 24 Mk II", "Tenta Sorella Brella", "Undercover Sorella Brella",
+        "Order Brella Replica", "Tenta Brella CRE-M", "Patternz Undercover Brella",
     ],
     "blaster": [
-        "Blaster", "Rapid Blaster", "Custom Blaster", "Rapid Blaster Deco", "Range Blaster",
-        "Luna Blaster", "Custom Range Blaster", "S-BLAST '92", "Clash Blaster", "Luna Blaster Neo",
-        "Clash Blaster Neo", "Rapid Blaster Pro", "S-BLAST '91", "Rapid Blaster Pro Deco", "Order Blaster Replica",
+        "Blaster", "Rapid Blaster", "Custom Blaster", "Rapid Blaster Deco",
+        "Range Blaster", "Luna Blaster", "Custom Range Blaster", "S-BLAST '92",
+        "Clash Blaster", "Luna Blaster Neo", "Clash Blaster Neo", "Rapid Blaster Pro",
+        "S-BLAST '91", "Rapid Blaster Pro Deco", "Order Blaster Replica", "Gleamz Blaster",
+        "Rapid Blaster Pro WNT-R",
     ],
     "brush": [
-        "Octobrush", "Inkbrush", "Octobrush Nouveau", "Painbrush", "Inkbrush Nouveau", "Painbrush Nouveau",
-        "Orderbrush Replica",
+        "Octobrush", "Inkbrush", "Octobrush Nouveau", "Painbrush",
+        "Inkbrush Nouveau", "Painbrush Nouveau", "Orderbrush Replica", "Painbrush BRN-Z",
+        "Cometz Octobrush",
     ],
     "stringer": [
-        "Tri-Stringer", "REEF-LUX 450", "Inkline Tri-Stringer", "REEF-LUX 450 Deco", "Wellstring V",
-        "Custom Wellstring V", "Order Stringer Replica",
+        "Tri-Stringer", "REEF-LUX 450", "Inkline Tri-Stringer", "REEF-LUX 450 Deco",
+        "Wellstring V", "Custom Wellstring V", "Order Stringer Replica", "REEF-LUX 450 MIL-K",
+        "Bulbz Tri-Stringer",
     ],
     "splatana": [
-        "Splatana Wiper", "Splatana Wiper Deco", "Splatana Stamper", "Splatana Stamper Nouveau", "Mint Decavitator",
-        "Charcoal Decavitator", "Order Splatana Replica",
+        "Splatana Wiper", "Splatana Wiper Deco", "Splatana Stamper", "Splatana Stamper Nouveau",
+        "Mint Decavitator", "Charcoal Decavitator", "Order Splatana Replica", "Splatana Wiper RUS-T",
+        "Stickerz Splatana Stamper",
     ],
 }
 
@@ -143,7 +159,9 @@ def main() -> int:
 
     manifest = {
         "source": "Inkipedia MediaWiki API / S3 Weapon Main * 2D Current.png",
-        "rightsNote": "Images are Nintendo-owned Splatoon 3 weapon renders mirrored by Inkipedia. Intended for local non-commercial fan use only.",
+        "apiUrl": API_URL,
+        "retrievedAt": datetime.now(timezone.utc).isoformat(),
+        "rightsNote": "Images are Nintendo-owned Splatoon 3 weapon renders mirrored by Inkipedia. This repository publishes them for a non-commercial fan tool at the user's request.",
         "downloadedCount": len(downloaded),
         "missingCount": len(missing),
         "items": downloaded,

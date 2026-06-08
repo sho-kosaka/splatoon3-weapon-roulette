@@ -28,6 +28,10 @@ test('buildWeapons creates stable ids, type metadata, order flag, and image path
     name: 'わかばシューター',
     type: 'シューター',
     isOrder: false,
+    statInkKey: null,
+    xMatchGroup: null,
+    xMatchLegacyGroup: null,
+    matchingRange: null,
     imagePath: './assets/weapons/shooter-0.png',
   });
   assert.equal(weapons[1].isOrder, true);
@@ -37,13 +41,16 @@ test('buildWeapons creates stable ids, type metadata, order flag, and image path
 
 test('default weapon list contains normal and order weapons with required fields', () => {
   const weapons = buildWeapons(CATEGORY_DEFINITIONS);
-  assert.ok(weapons.length >= 80);
+  assert.equal(weapons.length, 173);
   assert.ok(weapons.some((weapon) => weapon.isOrder));
   for (const weapon of weapons) {
     assert.ok(weapon.id);
     assert.ok(weapon.name);
     assert.ok(weapon.type);
     assert.equal(typeof weapon.isOrder, 'boolean');
+    assert.equal(typeof weapon.statInkKey, 'string');
+    assert.match(weapon.xMatchGroup, /^(S|M|L|C)$/);
+    assert.equal(typeof weapon.matchingRange, 'number');
     assert.match(weapon.imagePath, /^\.\/assets\/weapons\/.+\.png$/);
   }
 });

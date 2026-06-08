@@ -12,7 +12,7 @@ https://sho-kosaka.github.io/splatoon3-weapon-roulette/
 - ブキ種を選択して抽選対象を絞れる
 - ブキ重複なし / ありを切り替えられる
 - オーダー武器を抽選に含める / 含めないを切り替えられる
-- 武器データに `武器種区分`、`オーダー武器フラグ`、`PNG画像パス` を持たせる
+- 武器データに `武器種区分`、`オーダー武器フラグ`、`Xマッチ射程グループ`、`Matching Range`、`PNG画像パス` を持たせる
 - 参加者全員分のブキを一括抽選できる
 - 参加者人数分のルーレットカードが同時に高速回転する
 - 停止時に全カードが文字なしの光輪・閃光エフェクトで確定する
@@ -65,14 +65,26 @@ http://127.0.0.1:5173
 
 ## 武器画像について
 
-`assets/weapons/*.png` に、Splatoon 3の武器レンダー画像を141枚ローカル保存しています。
-取得元は Inkipedia の MediaWiki API 上にある `S3 Weapon Main ... 2D Current.png` 系の画像です。
+`assets/weapons/*.png` に、Splatoon 3の武器レンダー画像を173枚ローカル保存しています。
+取得元は Inkipedia の MediaWiki API 上にある `S3 Weapon Main ... 2D Current.png` 系の画像です。個別の取得URLは `assets/weapons/official-image-manifest.json` に保存しています。
 
 注意:
 
 - このツールは個人・非営利のファン用途として公開しています。
 - Splatoon 3および武器画像等の権利は任天堂に帰属します。
 - 本リポジトリは任天堂および関係各社とは関係ありません。
+
+## ブキデータの出典
+
+2026-06-09時点の現行データとして、Splatoon 3 version 11.1.0 の173ブキ構成に更新しています。
+
+- ブキ総数・現行リスト確認: Inkipedia / Splatoon Wiki `List of main weapons in Splatoon 3`
+- 日本語名、英語名、`statInkKey`、`matchingRange`: stat.ink `GET /api/v3/weapon?full=1`
+- Xマッチ射程グループ: stat.ink `API Info: Weapons (Splatoon 3)` の `X Battle (S6-)` と `Matching Range`
+- 旧Xマッチグループ参考値: stat.ink `API Info: Weapons (Splatoon 3)` の `X Battle (S2-)`
+- Xマッチが類似ロードアウトでマッチングすることの確認: Nintendo公式 Splatoon 3 “How X Battles work”
+
+詳細は `docs/data-sources.md` を参照してください。
 
 再取得する場合:
 
@@ -107,9 +119,10 @@ src/main.js                         UI制御、同時ルーレット、インパ
 src/roulette.js                     武器データ、抽選ロジック
 src/app.bundle.js                   file://直開き用の結合済みJS
 src/styles.css                      デザイン、同時ルーレット、光輪・閃光CSS
-assets/weapons/*.png                武器画像 141枚
+assets/weapons/*.png                武器画像 173枚
 assets/sounds/README.md             効果音ファイル配置メモ
 assets/weapons/official-image-manifest.json 画像取得元マニフェスト
+docs/data-sources.md                ブキデータ・画像取得元の整理
 scripts/download-official-assets.py 公式由来PNG取得スクリプト
 scripts/generate-assets.mjs         旧SVGプレースホルダー生成スクリプト
 test/roulette.test.js               ロジックテスト
