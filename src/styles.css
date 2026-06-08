@@ -131,6 +131,7 @@ textarea {
 textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(39, 243, 255, 0.12); }
 
 .quick-actions, .type-toolbar, .primary-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.quick-actions { align-items: stretch; }
 .ghost-btn, .secondary-btn {
   color: var(--text);
   background: rgba(255, 255, 255, 0.07);
@@ -139,6 +140,69 @@ textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(39, 243, 
   padding: 10px 14px;
 }
 .ghost-btn:hover, .secondary-btn:hover { background: rgba(255, 255, 255, 0.12); }
+.sample-btn {
+  min-width: 92px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 12px;
+  font-weight: 900;
+}
+.people-icon {
+  --head: 7px;
+  --body-w: 10px;
+  --body-h: 6px;
+  width: 28px;
+  height: 24px;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  flex: 0 0 auto;
+  padding-top: 2px;
+  filter: drop-shadow(0 5px 8px rgba(0,0,0,0.34));
+}
+.people-icon[data-count='1'] {
+  width: 20px;
+  grid-template-columns: 1fr;
+  padding-top: 3px;
+}
+.people-icon[data-count='4'] {
+  width: 27px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px 4px;
+}
+.people-icon[data-count='8'] {
+  --head: 5px;
+  --body-w: 8px;
+  --body-h: 4px;
+  width: 36px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px 2px;
+  padding-top: 1px;
+}
+.people-icon i {
+  width: var(--head);
+  height: var(--head);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fff, var(--cyan));
+  position: relative;
+}
+.people-icon i::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: calc(var(--head) + 1px);
+  width: var(--body-w);
+  height: var(--body-h);
+  border-radius: 999px 999px 5px 5px;
+  background: linear-gradient(135deg, var(--lime), #87ff3d);
+  transform: translateX(-50%);
+}
+.people-icon i:nth-child(3n + 2) { background: linear-gradient(135deg, #fff, var(--pink)); }
+.people-icon i:nth-child(3n + 2)::after { background: linear-gradient(135deg, var(--pink), var(--orange)); }
+.people-icon i:nth-child(3n) { background: linear-gradient(135deg, #fff, var(--lime)); }
+.people-icon i:nth-child(3n)::after { background: linear-gradient(135deg, var(--cyan), #0984ff); }
 
 .rule-row { margin: 14px 0; display: grid; gap: 12px; }
 .switch { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; }

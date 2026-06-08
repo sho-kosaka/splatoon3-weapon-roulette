@@ -24,7 +24,7 @@
             <span class="step">01</span>
             <div>
               <h2>参加者</h2>
-              <p>1人用は単体ブキ履歴モード、8人用は参加者割り当てモードに切り替わります。</p>
+              <p>1人用は単体ブキ履歴モード、4/8人用は参加者割り当てモードに切り替わります。</p>
             </div>
           </div>
           <textarea id="playersInput" rows="8" spellcheck="false">プレイヤー1
@@ -36,9 +36,19 @@
 プレイヤー7
 プレイヤー8</textarea>
           <div class="quick-actions">
-            <button class="ghost-btn" data-sample="1">1人用サンプル</button>
-            <button class="ghost-btn" data-sample="8">8人用サンプル</button>
-            <button class="ghost-btn" id="clearPlayersBtn">クリア</button>
+            <button class="ghost-btn sample-btn" type="button" data-sample="1" aria-label="1人用サンプル">
+              <span class="people-icon" data-count="1" aria-hidden="true"><i></i></span>
+              <span>1人用</span>
+            </button>
+            <button class="ghost-btn sample-btn" type="button" data-sample="4" aria-label="4人用サンプル">
+              <span class="people-icon" data-count="4" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <span>4人用</span>
+            </button>
+            <button class="ghost-btn sample-btn" type="button" data-sample="8" aria-label="8人用サンプル">
+              <span class="people-icon" data-count="8" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span>8人用</span>
+            </button>
+            <button class="ghost-btn" type="button" id="clearPlayersBtn">クリア</button>
           </div>
 
           <div class="section-header compact">
@@ -71,7 +81,7 @@
             <span class="step">仕様</span>
             <div>
               <h2>ルーレット仕様</h2>
-              <p>1人用は履歴抽選、8人用は参加者割り当てとして自動で切り替わります。</p>
+              <p>1人用は履歴抽選、4/8人用は参加者割り当てとして自動で切り替わります。</p>
             </div>
           </div>
           <label class="switch auto-mark-row">
