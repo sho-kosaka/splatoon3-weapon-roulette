@@ -50,6 +50,13 @@
             </button>
             <button class="ghost-btn" type="button" id="clearPlayersBtn">クリア</button>
           </div>
+          <div class="advanced-rule-card" aria-label="チームと射程ルール">
+            <div class="mini-section-title">
+              <span>チーム・射程ルール</span>
+              <button class="ghost-btn small" type="button" id="openRuleDrawerBtn">詳細を編集</button>
+            </div>
+            <div id="advancedRuleSummary" class="advanced-rule-summary"></div>
+          </div>
 
           <div class="section-header compact">
             <span class="step">02</span>
@@ -152,6 +159,59 @@
       </section>
 
     </main>
+    <div id="ruleDrawerBackdrop" class="rule-drawer-backdrop" hidden></div>
+    <aside id="ruleDrawer" class="rule-drawer" aria-label="チーム・射程ルール編集" hidden>
+      <div class="rule-drawer-head">
+        <div>
+          <p class="eyebrow">Advanced Rules</p>
+          <h2>チーム・射程ルール</h2>
+        </div>
+        <button class="ghost-btn small" type="button" id="closeRuleDrawerBtn">閉じる</button>
+      </div>
+
+      <section class="drawer-section">
+        <div class="drawer-section-head">
+          <h3>チーム設定</h3>
+          <p>初期配置は上から半分です。メンバーをドラッグしてA/Bチーム間を移動できます。</p>
+        </div>
+        <label class="switch">
+          <input id="teamModeEnabled" type="checkbox" />
+          <span></span>
+          チーム分けを有効化
+        </label>
+        <div class="team-basis-row">
+          <span>初期配置: 上から半分</span>
+          <button class="ghost-btn small" type="button" id="resetTeamSplitBtn">上から半分に戻す</button>
+        </div>
+        <div id="teamPreview" class="team-preview"></div>
+      </section>
+
+      <section class="drawer-section">
+        <div class="drawer-section-head">
+          <h3>射程バランス</h3>
+          <p>射程区分ごとの上限人数を選びます。おまかせは上限を決めず、残り枠からランダムに入ります。</p>
+        </div>
+        <label class="switch">
+          <input id="rangeRuleEnabled" type="checkbox" />
+          <span></span>
+          射程制限を有効化
+        </label>
+        <div id="rangePresetActions" class="range-preset-actions">
+          <button class="ghost-btn small" type="button" data-range-preset="long-or-ultra-1">長射程or超長射程を1枠固定</button>
+          <button class="ghost-btn small" type="button" data-range-preset="long-1">長射程を1枠固定</button>
+          <button class="ghost-btn small" type="button" data-range-preset="ultra-1">超長射程を1枠固定</button>
+        </div>
+        <div id="rangeBalanceTotal" class="range-balance-total"></div>
+        <div class="range-balance-scroll">
+          <div id="rangeBalanceTable" class="range-balance-table" aria-label="射程区分ごとの人数表"></div>
+        </div>
+      </section>
+
+      <div class="rule-drawer-actions">
+        <button class="ghost-btn" type="button" id="resetAdvancedRulesBtn">リセット</button>
+        <button class="primary-btn" type="button" id="applyAdvancedRulesBtn">適用</button>
+      </div>
+    </aside>
     <div id="copyToast" class="copy-toast" role="status" aria-live="polite" hidden></div>
     <script src="./src/app.bundle.js"></script>
   </body>

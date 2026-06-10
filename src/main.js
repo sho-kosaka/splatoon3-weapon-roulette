@@ -1,5 +1,6 @@
 import {
   CATEGORY_DEFINITIONS,
+  X_MATCH_RANGE_LABELS,
   appendWeaponHistory,
   applyDrawnWeaponExclusion,
   updateWeaponUsageState,
@@ -29,6 +30,16 @@ const state = {
   isSpinning: false,
   presentationMode: false,
   spinTimers: [],
+  teamMode: {
+    enabled: false,
+  },
+  teamAssignments: {},
+  rangeRule: {
+    enabled: false,
+    counts: createDefaultRangeCounts(4),
+    minimums: createDefaultRangeMinimums(),
+    thresholdFixed: null,
+  },
 };
 
 const els = {
@@ -58,6 +69,20 @@ const els = {
   clearTypesBtn: document.querySelector('#clearTypesBtn'),
   clearPlayersBtn: document.querySelector('#clearPlayersBtn'),
   modeInputs: [...document.querySelectorAll('input[name="drawMode"]')],
+  openRuleDrawerBtn: document.querySelector('#openRuleDrawerBtn'),
+  closeRuleDrawerBtn: document.querySelector('#closeRuleDrawerBtn'),
+  ruleDrawer: document.querySelector('#ruleDrawer'),
+  ruleDrawerBackdrop: document.querySelector('#ruleDrawerBackdrop'),
+  advancedRuleSummary: document.querySelector('#advancedRuleSummary'),
+  teamModeEnabled: document.querySelector('#teamModeEnabled'),
+  resetTeamSplitBtn: document.querySelector('#resetTeamSplitBtn'),
+  teamPreview: document.querySelector('#teamPreview'),
+  rangeRuleEnabled: document.querySelector('#rangeRuleEnabled'),
+  rangePresetActions: document.querySelector('#rangePresetActions'),
+  rangeBalanceTable: document.querySelector('#rangeBalanceTable'),
+  rangeBalanceTotal: document.querySelector('#rangeBalanceTotal'),
+  resetAdvancedRulesBtn: document.querySelector('#resetAdvancedRulesBtn'),
+  applyAdvancedRulesBtn: document.querySelector('#applyAdvancedRulesBtn'),
 };
 
 const samples = {
@@ -76,10 +101,23 @@ const soundState = {
   runId: 0,
 };
 
+let draggedTeamPlayer = null;
+
 const customSoundPaths = {
   roulette: 'assets/sounds/roulette-loop.mp3',
   result: 'assets/sounds/result-se.mp3',
 };
+
+const rangeShortLabels = {
+  短射程: '短',
+  短中射程: '短中',
+  中射程: '中',
+  中長射程: '中長',
+  長射程: '長',
+  超長射程: '超長',
+};
+
+const MAX_RANGE_COUNT = 4;
 
 function soundVolume() {
   return Math.max(0, Math.min(1, Number(els.soundVolume?.value ?? 55) / 100));
@@ -298,12 +336,206 @@ function preloadWeaponImages() {
   }
 }
 
+function currentPlayers() {
+  return validatePlayers(els.playersInput.value).players;
+}
+
+function createDefaultRangeCounts() {
+  return Object.fromEntries(X_MATCH_RANGE_LABELS.map((label) => [label, null]));
+}
+
+function createDefaultRangeMinimums() {
+  return Object.fromEntries(X_MATCH_RANGE_LABELS.map((label) => [label, 0]));
+}
+
+function ensureRangeCountsShape() {
+  state.rangeRule.counts = {
+    ...Object.fromEntries(X_MATCH_RANGE_LABELS.map((label) => [label, null])),
+    ...(state.rangeRule.counts ?? {}),
+  };
+  state.rangeRule.minimums = {
+    ...Object.fromEntries(X_MATCH_RANGE_LABELS.map((label) => [label, 0])),
+    ...(state.rangeRule.minimums ?? {}),
+  };
+  if (state.rangeRule.thresholdFixed && state.rangeRule.thresholdFixed.thresholdLabel !== '長射程') {
+    state.rangeRule.thresholdFixed = null;
+  }
+}
+
+function resetTeamAssignments(players = currentPlayers()) {
+  const splitAt = Math.ceil(players.length / 2);
+  state.teamAssignments = Object.fromEntries(players.map((player, index) => [player, index < splitAt ? 'A' : 'B']));
+}
+
+function reconcileTeamAssignments(players = currentPlayers()) {
+  const validPlayers = new Set(players);
+  Object.keys(state.teamAssignments).forEach((player) => {
+    if (!validPlayers.has(player)) delete state.teamAssignments[player];
+  });
+  const splitAt = Math.ceil(players.length / 2);
+  players.forEach((player, index) => {
+    if (!['A', 'B'].includes(state.teamAssignments[player])) {
+      state.teamAssignments[player] = index < splitAt ? 'A' : 'B';
+    }
+  });
+}
+
+function effectiveTeamMode(players = currentPlayers()) {
+  return {
+    enabled: state.teamMode.enabled && players.length >= 2,
+  };
+}
+
+function buildTeamPreviewGroups(players = currentPlayers()) {
+  if (!state.teamMode.enabled || players.length < 2) {
+    return [{ id: 'all', name: '全体', players }];
+  }
+  reconcileTeamAssignments(players);
+  return [
+    { id: 'A', name: 'Aチーム', players: players.filter((player) => state.teamAssignments[player] !== 'B') },
+    { id: 'B', name: 'Bチーム', players: players.filter((player) => state.teamAssignments[player] === 'B') },
+  ];
+}
+
+function teamModeForRule(players = currentPlayers()) {
+  const teamMode = effectiveTeamMode(players);
+  if (!teamMode.enabled) return teamMode;
+  const groups = buildTeamPreviewGroups(players).map((team) => ({
+    id: team.id,
+    name: team.name,
+    playerIndexes: team.players.map((player) => players.indexOf(player)),
+  }));
+  return { enabled: true, groups };
+}
+
+function rangeCountTotal() {
+  ensureRangeCountsShape();
+  return X_MATCH_RANGE_LABELS.reduce((total, label) => {
+    const count = state.rangeRule.counts[label];
+    return Number.isInteger(count) ? total + count : total;
+  }, 0);
+}
+
+function rangeAutoCount() {
+  ensureRangeCountsShape();
+  return X_MATCH_RANGE_LABELS.filter((label) => state.rangeRule.counts[label] === null).length;
+}
+
+function thresholdFixedRule() {
+  ensureRangeCountsShape();
+  return state.rangeRule.thresholdFixed?.thresholdLabel === '長射程'
+    ? state.rangeRule.thresholdFixed
+    : null;
+}
+
+function isThresholdFixedLabel(label) {
+  const fixedRule = thresholdFixedRule();
+  return Boolean(fixedRule) && ['長射程', '超長射程'].includes(label);
+}
+
+function rangeTargetInfo(players = currentPlayers()) {
+  if (!players.length) return { target: 1, error: null };
+  const teamMode = effectiveTeamMode(players);
+  if (!teamMode.enabled) return { target: players.length, error: null };
+  const groups = buildTeamPreviewGroups(players);
+  const sizes = groups.map((team) => team.players.length);
+  const expectedTeamSize = Math.min(MAX_RANGE_COUNT, Math.max(1, Math.ceil(players.length / 2)));
+  if (sizes.some((size) => size === 0)) {
+    return { target: expectedTeamSize, error: 'A/Bチームの両方に参加者を入れてください。' };
+  }
+  if (!sizes.every((size) => size === sizes[0])) {
+    const evenSplitMessage = players.length === 8
+      ? '射程表を使う場合はA/Bチームを4人ずつにしてください。'
+      : '射程表を使う場合はA/Bチームの人数をそろえてください。';
+    return { target: expectedTeamSize, error: evenSplitMessage };
+  }
+  return { target: Math.min(MAX_RANGE_COUNT, sizes[0]), error: null };
+}
+
+function rangeBalanceError(players = currentPlayers()) {
+  if (!state.rangeRule.enabled) return null;
+  const targetInfo = rangeTargetInfo(players);
+  if (targetInfo.error) return targetInfo.error;
+  ensureRangeCountsShape();
+  const impossibleFixedLabel = X_MATCH_RANGE_LABELS.find((label) => (
+    Number.isInteger(state.rangeRule.counts[label])
+    && Number.isInteger(state.rangeRule.minimums[label])
+    && state.rangeRule.minimums[label] > state.rangeRule.counts[label]
+  ));
+  if (impossibleFixedLabel) {
+    return `${impossibleFixedLabel}の固定枠が上限を超えています。上限を増やすか、固定プリセットを解除してください。`;
+  }
+  const total = rangeCountTotal();
+  if (rangeAutoCount() === 0 && total < targetInfo.target) {
+    return `数値指定だけでは${targetInfo.target}人に届きません。どこかをおまかせにするか、上限を増やしてください。`;
+  }
+  return null;
+}
+
+function rangeBalanceSummary() {
+  ensureRangeCountsShape();
+  return X_MATCH_RANGE_LABELS
+    .filter((label) => Number.isInteger(state.rangeRule.counts[label]))
+    .map((label) => `${rangeShortLabels[label]}${state.rangeRule.counts[label]}以下`)
+    .join(' / ') || 'すべておまかせ';
+}
+
+function rangeRequiredSummary() {
+  ensureRangeCountsShape();
+  const exactText = X_MATCH_RANGE_LABELS
+    .filter((label) => Number.isInteger(state.rangeRule.minimums[label]) && state.rangeRule.minimums[label] > 0)
+    .map((label) => `${rangeShortLabels[label]}${state.rangeRule.minimums[label]}枠固定`)
+  const thresholdText = thresholdFixedRule() ? ['長or超長1枠固定'] : [];
+  return [...thresholdText, ...exactText].join(' / ');
+}
+
+function currentAssignmentConstraints(players = currentPlayers()) {
+  if (!state.rangeRule.enabled) return [];
+  ensureRangeCountsShape();
+  const scope = effectiveTeamMode(players).enabled ? 'eachTeam' : 'all';
+  const maxConstraints = X_MATCH_RANGE_LABELS
+    .filter((label) => Number.isInteger(state.rangeRule.counts[label]))
+    .map((label) => ({
+      kind: 'maxExactXMatchRangeLabel',
+      scope,
+      label,
+      maxCount: Number(state.rangeRule.counts[label]),
+    }));
+  const minConstraints = X_MATCH_RANGE_LABELS
+    .filter((label) => Number.isInteger(state.rangeRule.minimums[label]) && state.rangeRule.minimums[label] > 0)
+    .map((label) => ({
+      kind: 'minExactXMatchRangeLabel',
+      scope,
+      label,
+      minCount: Number(state.rangeRule.minimums[label]),
+    }));
+  const fixedThreshold = thresholdFixedRule();
+  const thresholdConstraints = fixedThreshold ? [
+    {
+      kind: 'maxAtOrAboveXMatchRangeLabel',
+      scope,
+      thresholdLabel: fixedThreshold.thresholdLabel,
+      maxCount: fixedThreshold.count,
+    },
+    {
+      kind: 'minAtOrAboveXMatchRangeLabel',
+      scope,
+      thresholdLabel: fixedThreshold.thresholdLabel,
+      minCount: fixedThreshold.count,
+    },
+  ] : [];
+  return [...maxConstraints, ...minConstraints, ...thresholdConstraints];
+}
+
 function currentRule() {
+  const players = currentPlayers();
   return {
     enabledTypes: [...state.selectedTypes],
     excludedWeaponIds: [...state.excludedWeaponIds],
     noDuplicateWeapons: els.noDuplicateWeapons.checked,
     includeOrderWeapons: els.includeOrderWeapons.checked,
+    teamMode: teamModeForRule(players),
+    assignmentConstraints: currentAssignmentConstraints(players),
   };
 }
 
@@ -333,6 +565,177 @@ function orderBadge(weapon, label = 'ORDER') {
 
 function orderTypeMarkup(weapon) {
   return `${escapeHtml(weapon.type)}${orderBadge(weapon)}`;
+}
+
+function applySingleRangeRule(candidateWeapons) {
+  if (!state.rangeRule.enabled) return candidateWeapons;
+  ensureRangeCountsShape();
+  const blockedLabels = new Set(X_MATCH_RANGE_LABELS.filter((label) => state.rangeRule.counts[label] === 0));
+  return candidateWeapons.filter((weapon) => !blockedLabels.has(weapon.xMatchRangeLabel));
+}
+
+function preflightAssignmentError(candidates, playerCheck, rule) {
+  if (state.drawMode !== 'multi' || playerCheck.error || !rule.assignmentConstraints.length) return null;
+  return drawAssignments(playerCheck.players, candidates, rule).error;
+}
+
+function advancedRuleSummaryText(players = currentPlayers()) {
+  const teamMode = effectiveTeamMode(players);
+  const targetInfo = rangeTargetInfo(players);
+  const teamText = teamMode.enabled
+    ? `チームON: ${buildTeamPreviewGroups(players).map((team) => `${team.name.replace('チーム', '')}${team.players.length}`).join(' / ')}`
+    : 'チームなし';
+  const requiredText = rangeRequiredSummary();
+  const rangeText = state.rangeRule.enabled
+    ? `${teamMode.enabled ? '各チーム' : '全体'}射程配分: ${rangeBalanceSummary()}${requiredText ? ` / ${requiredText}` : ''}（上限${rangeCountTotal()}/${targetInfo.target}・おまかせ${rangeAutoCount()}）`
+    : '射程制限なし';
+  return `${teamText} / ${rangeText}`;
+}
+
+function renderAdvancedRuleSummary() {
+  if (!els.advancedRuleSummary) return;
+  const players = currentPlayers();
+  const canUseTeams = players.length >= 2;
+  const suggested = players.length === 8 && !state.teamMode.enabled
+    ? '<button class="ghost-btn small suggestion-chip" type="button" data-rule-preset="team-4v4">4 vs 4 にする</button>'
+    : '';
+  els.advancedRuleSummary.innerHTML = `
+    <div>
+      <b>${escapeHtml(advancedRuleSummaryText(players))}</b>
+      <small>${canUseTeams ? 'チームは上から半分で初期化し、詳細画面でドラッグ移動できます。' : '1人のときは射程表だけ使えます。'}</small>
+    </div>
+    <div class="advanced-rule-actions">
+      ${canUseTeams ? `<button class="ghost-btn small team-quick-toggle" type="button" id="teamModeQuickBtn">${state.teamMode.enabled ? 'チームOFF' : 'チームON'}</button>` : ''}
+      ${suggested}
+      <button class="ghost-btn small" type="button" id="openRuleDrawerBtnInline">詳細を編集</button>
+    </div>
+  `;
+  els.advancedRuleSummary.querySelector('#openRuleDrawerBtnInline')?.addEventListener('click', openRuleDrawer);
+  els.advancedRuleSummary.querySelector('#teamModeQuickBtn')?.addEventListener('click', () => {
+    state.teamMode.enabled = !state.teamMode.enabled;
+    if (state.teamMode.enabled) resetTeamAssignments(players);
+    renderAdvancedRuleControls();
+    updateSummary();
+  });
+  els.advancedRuleSummary.querySelector('[data-rule-preset="team-4v4"]')?.addEventListener('click', () => {
+    state.teamMode.enabled = true;
+    resetTeamAssignments(players);
+    state.rangeRule.counts = createDefaultRangeCounts(4);
+    state.rangeRule.minimums = createDefaultRangeMinimums();
+    state.rangeRule.thresholdFixed = null;
+    renderAdvancedRuleControls();
+    updateSummary();
+  });
+}
+
+function renderTeamPreview() {
+  if (!els.teamPreview) return;
+  const players = currentPlayers();
+  const groups = buildTeamPreviewGroups(players);
+  els.teamPreview.innerHTML = groups.map((team) => `
+    <section class="team-preview-card" data-team-id="${team.id}" data-drop-team="${team.id}">
+      <div class="team-preview-head">
+        <strong>${escapeHtml(team.name)}</strong>
+        <span>${team.players.length}人</span>
+      </div>
+      <div class="team-member-list" data-drop-team="${team.id}">
+        ${team.players.length ? team.players.map((player, index) => `
+          <div class="team-member-row" data-member-index="${index}" data-player="${escapeHtml(player)}" draggable="${state.teamMode.enabled && team.id !== 'all'}">
+            <span class="drag-handle" aria-hidden="true"></span>
+            <b>${escapeHtml(player)}</b>
+            ${state.teamMode.enabled && team.id !== 'all'
+              ? `<button class="team-move-btn" type="button" data-team-move-player="${escapeHtml(player)}" data-team-move-target="${team.id === 'A' ? 'B' : 'A'}">${team.id === 'A' ? 'Bへ' : 'Aへ'}</button>`
+              : ''}
+          </div>
+        `).join('') : '<p class="empty-team">メンバーなし</p>'}
+      </div>
+    </section>
+  `).join('');
+}
+
+function renderRangeControls() {
+  ensureRangeCountsShape();
+  const players = currentPlayers();
+  const targetInfo = rangeTargetInfo(players);
+  const targetTotal = Math.max(1, targetInfo.target);
+  const countOptions = ['auto', ...Array.from({ length: MAX_RANGE_COUNT + 1 }, (_, index) => index)];
+  const total = rangeCountTotal();
+  const autoCount = rangeAutoCount();
+  const balanceError = rangeBalanceError(players);
+  const fixedRule = thresholdFixedRule();
+  const fixedSummary = rangeRequiredSummary();
+  const visibleCapTotal = total + (fixedRule?.count ?? 0);
+  if (els.rangeBalanceTotal) {
+    els.rangeBalanceTotal.classList.toggle('ok', state.rangeRule.enabled && !balanceError);
+    els.rangeBalanceTotal.classList.toggle('warn', state.rangeRule.enabled && Boolean(balanceError));
+    els.rangeBalanceTotal.innerHTML = `
+      <b>${fixedRule ? '固定上限' : '数値上限'} ${visibleCapTotal} / 必要${targetTotal}人</b>
+      <span>${state.rangeRule.enabled ? (balanceError ?? `${fixedSummary ? `固定: ${fixedSummary}。` : ''}おまかせ${autoCount}区分。未指定の射程は残り枠からランダムに入ります。`) : '射程制限OFFのため抽選には使われません。'}</span>
+    `;
+  }
+  if (els.applyAdvancedRulesBtn && !state.isSpinning) {
+    els.applyAdvancedRulesBtn.disabled = Boolean(balanceError);
+  }
+  if (!els.rangeBalanceTable) return;
+  els.rangeBalanceTable.style.setProperty('--range-count-columns', countOptions.length);
+  els.rangeBalanceTable.innerHTML = `
+    <div class="range-balance-cell head label">射程区分</div>
+    ${countOptions.map((count) => `<div class="range-balance-cell head">${count === 'auto' ? 'おまかせ' : count}</div>`).join('')}
+    ${X_MATCH_RANGE_LABELS.map((label) => {
+      const exactFixed = Number.isInteger(state.rangeRule.minimums[label]) && state.rangeRule.minimums[label] > 0;
+      const thresholdFixed = isThresholdFixedLabel(label);
+      return `
+      <div class="range-balance-cell label ${exactFixed ? 'fixed-label' : ''} ${thresholdFixed ? 'threshold-fixed-label' : ''}">
+        <strong>${escapeHtml(label)}</strong>
+        <small>${rangeShortLabels[label]}</small>
+        ${exactFixed ? '<em>FIX</em>' : ''}
+        ${thresholdFixed ? '<em>OR FIX</em>' : ''}
+      </div>
+      ${countOptions.map((count) => {
+        const selected = count === 'auto'
+          ? state.rangeRule.counts[label] === null && !thresholdFixed
+          : state.rangeRule.counts[label] === count;
+        const exactFixedCell = exactFixed && count === state.rangeRule.minimums[label];
+        const thresholdFixedCell = thresholdFixed && count === fixedRule?.count;
+        return `
+        <button
+          class="range-count-cell ${count === 'auto' ? 'auto-cell' : ''} ${selected ? 'selected' : ''} ${exactFixedCell ? 'fixed-cell' : ''} ${thresholdFixedCell ? 'threshold-fixed-cell' : ''}"
+          type="button"
+          data-range-label="${escapeHtml(label)}"
+          data-range-count="${count}"
+          ${state.rangeRule.enabled ? '' : 'disabled'}
+          aria-label="${escapeHtml(label)}を${count === 'auto' ? 'おまかせ' : `${count}人以下`}にする"
+        >${thresholdFixedCell ? 'OR' : count === 'auto' ? '任' : count}</button>
+      `;
+      }).join('')}
+    `;
+    }).join('')}
+  `;
+}
+
+function renderAdvancedRuleControls() {
+  if (els.teamModeEnabled) els.teamModeEnabled.checked = state.teamMode.enabled;
+  if (els.rangeRuleEnabled) els.rangeRuleEnabled.checked = state.rangeRule.enabled;
+  renderTeamPreview();
+  renderRangeControls();
+  renderAdvancedRuleSummary();
+}
+
+function openRuleDrawer() {
+  renderAdvancedRuleControls();
+  if (els.ruleDrawerBackdrop) els.ruleDrawerBackdrop.hidden = false;
+  if (els.ruleDrawer) {
+    els.ruleDrawer.hidden = false;
+    window.requestAnimationFrame(() => els.ruleDrawer.classList.add('open'));
+  }
+}
+
+function closeRuleDrawer() {
+  if (els.ruleDrawer) els.ruleDrawer.classList.remove('open');
+  window.setTimeout(() => {
+    if (els.ruleDrawer && !els.ruleDrawer.classList.contains('open')) els.ruleDrawer.hidden = true;
+    if (els.ruleDrawerBackdrop) els.ruleDrawerBackdrop.hidden = true;
+  }, 160);
 }
 
 function showCopyToast(message, tone = 'success') {
@@ -468,24 +871,29 @@ function renderWeaponList() {
   }).join('');
 }
 
-function updateDrawAvailability(candidates, playerCheck) {
+function updateDrawAvailability(candidates, playerCheck, constraintError = null) {
   if (state.isSpinning) return;
   const hasNoTargets = state.selectedTypes.size === 0 || candidates.length === 0;
   const hasPlayerError = state.drawMode === 'multi' && Boolean(playerCheck.error);
-  els.drawBtn.disabled = hasNoTargets || hasPlayerError;
+  els.drawBtn.disabled = hasNoTargets || hasPlayerError || Boolean(constraintError);
   els.copyBtn.disabled = state.latestResultSnapshot === null;
 }
 
 function updateSummary() {
   const rule = currentRule();
-  const candidates = filterWeapons(weapons, rule);
+  const candidates = state.drawMode === 'single'
+    ? applySingleRangeRule(filterWeapons(weapons, rule))
+    : filterWeapons(weapons, rule);
   const playerCheck = validatePlayers(els.playersInput.value);
+  const balanceError = rangeBalanceError(playerCheck.players);
+  const constraintError = balanceError ?? preflightAssignmentError(candidates, playerCheck, rule);
   const summary = summarizeRule(rule);
   const orderCount = candidates.filter((weapon) => weapon.isOrder).length;
   const excludedCount = state.excludedWeaponIds.size;
   state.latestRuleSummary = `${state.drawMode === 'single' ? '1ブキずつ' : '参加者へ配る'} / ${summary}`;
   if (els.ruleSummary) els.ruleSummary.textContent = state.latestRuleSummary;
   els.candidateCounter.textContent = `候補ブキ: ${candidates.length} / ${weapons.length}　除外: ${excludedCount}　使用済み: ${state.drawnWeaponIds.size}　オーダー: ${orderCount}　参加者: ${playerCheck.players.length}人`;
+  renderAdvancedRuleSummary();
 
   if (state.selectedTypes.size === 0) {
     setError('ブキ種が1つも選択されていません。全ブキONを押すか、左のブキ種を1つ以上ONにしてください。');
@@ -497,10 +905,12 @@ function updateSummary() {
     setError('参加者を1人以上入力してください。');
   } else if (state.drawMode === 'single' && playerCheck.error && els.playersInput.value.trim()) {
     setError(playerCheck.error);
+  } else if (constraintError) {
+    setError(constraintError);
   } else {
     setError(null);
   }
-  updateDrawAvailability(candidates, playerCheck);
+  updateDrawAvailability(candidates, playerCheck, constraintError);
 }
 
 function renderResults(assignments) {
@@ -593,26 +1003,62 @@ function setControlsDisabled(disabled) {
   if (els.disableAllWeaponsBtn) els.disableAllWeaponsBtn.disabled = disabled;
   if (els.collapseAllWeaponGroupsBtn) els.collapseAllWeaponGroupsBtn.disabled = disabled;
   if (els.compactWeaponList) els.compactWeaponList.disabled = disabled;
+  if (els.openRuleDrawerBtn) els.openRuleDrawerBtn.disabled = disabled;
+  if (els.teamModeEnabled) els.teamModeEnabled.disabled = disabled;
+  if (els.resetTeamSplitBtn) els.resetTeamSplitBtn.disabled = disabled || !state.teamMode.enabled;
+  if (els.rangeRuleEnabled) els.rangeRuleEnabled.disabled = disabled;
+  if (els.resetAdvancedRulesBtn) els.resetAdvancedRulesBtn.disabled = disabled;
+  if (els.applyAdvancedRulesBtn) els.applyAdvancedRulesBtn.disabled = disabled;
+  els.rangePresetActions?.querySelectorAll('button').forEach((button) => { button.disabled = disabled; });
+  els.rangeBalanceTable?.querySelectorAll('button').forEach((button) => { button.disabled = disabled || !state.rangeRule.enabled; });
   els.weaponList?.querySelectorAll('input').forEach((input) => { input.disabled = disabled; });
   document.querySelectorAll('[data-sample]').forEach((button) => { button.disabled = disabled; });
 }
 
 function renderRouletteSlots(assignments) {
   els.rouletteDisplay.className = 'roulette-display multi';
+  const hasTeams = assignments.some((assignment) => assignment.teamId && assignment.teamId !== 'all');
+  const renderSlot = (assignment, index) => `
+    <article class="player-roulette idle" data-index="${index}" style="--slot-delay:${index * 34}ms">
+      <span class="player-index">${String(index + 1).padStart(2, '0')}</span>
+      <h3>${escapeHtml(assignment.player)}</h3>
+      <div class="roulette-image-stage">
+        <img src="${assignment.weapon.imagePath}" alt="${escapeHtml(assignment.weapon.name)}" />
+      </div>
+      <strong class="slot-weapon-name">READY?</strong>
+      <small class="slot-weapon-type">同時ルーレット待機中</small>
+      <span class="impact-effect" aria-hidden="true"><i></i><b></b><em></em></span>
+    </article>
+  `;
+
+  if (hasTeams) {
+    const teams = [...new Map(assignments.map((assignment) => [
+      assignment.teamId,
+      { id: assignment.teamId, name: assignment.teamName, index: assignment.teamIndex },
+    ])).values()].sort((a, b) => a.index - b.index);
+    els.rouletteDisplay.innerHTML = `
+      <div class="team-roulette-grid" aria-label="チーム別ブキルーレット">
+        ${teams.map((team) => `
+          <section class="team-roulette-group" data-team-id="${team.id}">
+            <h3>${escapeHtml(team.name)}</h3>
+            <div class="roulette-grid team-grid">
+              ${assignments
+                .map((assignment, index) => ({ assignment, index }))
+                .filter((item) => item.assignment.teamId === team.id)
+                .sort((a, b) => a.assignment.teamSlotIndex - b.assignment.teamSlotIndex)
+                .map((item) => renderSlot(item.assignment, item.index))
+                .join('')}
+            </div>
+          </section>
+        `).join('')}
+      </div>
+    `;
+    return;
+  }
+
   els.rouletteDisplay.innerHTML = `
     <div class="roulette-grid" aria-label="参加者別ブキルーレット">
-      ${assignments.map((assignment, index) => `
-        <article class="player-roulette idle" data-index="${index}" style="--slot-delay:${index * 34}ms">
-          <span class="player-index">${String(index + 1).padStart(2, '0')}</span>
-          <h3>${escapeHtml(assignment.player)}</h3>
-          <div class="roulette-image-stage">
-            <img src="${assignment.weapon.imagePath}" alt="${escapeHtml(assignment.weapon.name)}" />
-          </div>
-          <strong class="slot-weapon-name">READY?</strong>
-          <small class="slot-weapon-type">同時ルーレット待機中</small>
-          <span class="impact-effect" aria-hidden="true"><i></i><b></b><em></em></span>
-        </article>
-      `).join('')}
+      ${assignments.map((assignment, index) => renderSlot(assignment, index)).join('')}
     </div>
   `;
 }
@@ -630,7 +1076,8 @@ function updateSlot(slot, weapon) {
 function finishPlayerRoulettes(slots, assignments) {
   clearSpinTimers();
   playResultSound();
-  slots.forEach((slot, index) => {
+  slots.forEach((slot) => {
+    const index = Number(slot.dataset.index);
     updateSlot(slot, assignments[index].weapon);
     slot.classList.remove('spinning');
     slot.classList.add('locked', 'baban');
@@ -801,7 +1248,12 @@ function drawSingle() {
     setError(playerCheck.error);
     return;
   }
-  const candidates = filterWeapons(weapons, currentRule());
+  const balanceError = rangeBalanceError(playerCheck.players);
+  if (balanceError) {
+    setError(balanceError);
+    return;
+  }
+  const candidates = applySingleRangeRule(filterWeapons(weapons, currentRule()));
   const result = drawSingleWeapon(candidates);
   if (result.error) {
     setError(result.error);
@@ -819,6 +1271,11 @@ function drawMulti() {
     setError(playerCheck.error);
     return;
   }
+  const balanceError = rangeBalanceError(playerCheck.players);
+  if (balanceError) {
+    setError(balanceError);
+    return;
+  }
 
   const rule = currentRule();
   const candidates = filterWeapons(weapons, rule);
@@ -834,6 +1291,7 @@ function drawMulti() {
     title: '次の武器縛りプラベ結果',
     ruleSummary: `${state.drawMode === 'single' ? '1ブキずつ' : '参加者へ配る'} / ${summarizeRule(rule)}`,
     assignments: result.assignments,
+    teams: result.teams,
   });
   renderResults([]);
   renderRouletteSlots(result.assignments);
@@ -904,6 +1362,130 @@ els.weaponList?.addEventListener('toggle', (event) => {
   if (event.target.open) state.openWeaponTypes.add(type);
   else state.openWeaponTypes.delete(type);
 }, true);
+els.openRuleDrawerBtn?.addEventListener('click', openRuleDrawer);
+els.closeRuleDrawerBtn?.addEventListener('click', closeRuleDrawer);
+els.ruleDrawerBackdrop?.addEventListener('click', closeRuleDrawer);
+els.teamModeEnabled?.addEventListener('change', () => {
+  state.teamMode.enabled = els.teamModeEnabled.checked;
+  if (state.teamMode.enabled) {
+    resetTeamAssignments(currentPlayers());
+    state.rangeRule.counts = createDefaultRangeCounts(rangeTargetInfo().target);
+    state.rangeRule.minimums = createDefaultRangeMinimums();
+    state.rangeRule.thresholdFixed = null;
+  }
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.resetTeamSplitBtn?.addEventListener('click', () => {
+  resetTeamAssignments(currentPlayers());
+  state.rangeRule.counts = createDefaultRangeCounts(rangeTargetInfo().target);
+  state.rangeRule.minimums = createDefaultRangeMinimums();
+  state.rangeRule.thresholdFixed = null;
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.teamPreview?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-team-move-player][data-team-move-target]');
+  if (!button || !state.teamMode.enabled) return;
+  state.teamAssignments[button.dataset.teamMovePlayer] = button.dataset.teamMoveTarget;
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.teamPreview?.addEventListener('dragstart', (event) => {
+  const row = event.target.closest('.team-member-row');
+  if (!row || !state.teamMode.enabled) return;
+  draggedTeamPlayer = row.dataset.player;
+  row.classList.add('dragging');
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/plain', draggedTeamPlayer);
+});
+els.teamPreview?.addEventListener('dragend', () => {
+  draggedTeamPlayer = null;
+  els.teamPreview?.querySelectorAll('.dragging, .drag-over').forEach((element) => {
+    element.classList.remove('dragging', 'drag-over');
+  });
+});
+els.teamPreview?.addEventListener('dragover', (event) => {
+  const list = event.target.closest('[data-drop-team]');
+  if (!list || !state.teamMode.enabled || list.dataset.dropTeam === 'all') return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+  list.classList.add('drag-over');
+});
+els.teamPreview?.addEventListener('dragleave', (event) => {
+  const list = event.target.closest('[data-drop-team]');
+  if (list && !list.contains(event.relatedTarget)) list.classList.remove('drag-over');
+});
+els.teamPreview?.addEventListener('drop', (event) => {
+  const list = event.target.closest('[data-drop-team]');
+  if (!list || !state.teamMode.enabled || list.dataset.dropTeam === 'all') return;
+  event.preventDefault();
+  const player = draggedTeamPlayer || event.dataTransfer.getData('text/plain');
+  if (player) state.teamAssignments[player] = list.dataset.dropTeam;
+  list.classList.remove('drag-over');
+  draggedTeamPlayer = null;
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.rangeRuleEnabled?.addEventListener('change', () => {
+  state.rangeRule.enabled = els.rangeRuleEnabled.checked;
+  if (state.rangeRule.enabled) {
+    state.rangeRule.counts = createDefaultRangeCounts(rangeTargetInfo().target);
+    state.rangeRule.minimums = createDefaultRangeMinimums();
+    state.rangeRule.thresholdFixed = null;
+  }
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.rangePresetActions?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-range-preset]');
+  if (!button) return;
+  state.rangeRule.enabled = true;
+  const nextCounts = createDefaultRangeCounts();
+  const nextMinimums = createDefaultRangeMinimums();
+  let nextThresholdFixed = null;
+  if (button.dataset.rangePreset === 'long-or-ultra-1') {
+    nextThresholdFixed = { thresholdLabel: '長射程', count: 1 };
+  }
+  if (button.dataset.rangePreset === 'long-1') {
+    nextCounts.長射程 = 1;
+    nextMinimums.長射程 = 1;
+  }
+  if (button.dataset.rangePreset === 'ultra-1') {
+    nextCounts.超長射程 = 1;
+    nextMinimums.超長射程 = 1;
+  }
+  state.rangeRule.counts = nextCounts;
+  state.rangeRule.minimums = nextMinimums;
+  state.rangeRule.thresholdFixed = nextThresholdFixed;
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.rangeBalanceTable?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-range-label][data-range-count]');
+  if (!button) return;
+  ensureRangeCountsShape();
+  state.rangeRule.counts[button.dataset.rangeLabel] = button.dataset.rangeCount === 'auto'
+    ? null
+    : Number(button.dataset.rangeCount);
+  state.rangeRule.minimums[button.dataset.rangeLabel] = 0;
+  if (['長射程', '超長射程'].includes(button.dataset.rangeLabel)) {
+    state.rangeRule.thresholdFixed = null;
+  }
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.resetAdvancedRulesBtn?.addEventListener('click', () => {
+  state.teamMode.enabled = false;
+  resetTeamAssignments(currentPlayers());
+  state.rangeRule.enabled = false;
+  state.rangeRule.counts = createDefaultRangeCounts(4);
+  state.rangeRule.minimums = createDefaultRangeMinimums();
+  state.rangeRule.thresholdFixed = null;
+  renderAdvancedRuleControls();
+  updateSummary();
+});
+els.applyAdvancedRulesBtn?.addEventListener('click', closeRuleDrawer);
 els.singleHistory?.addEventListener('change', (event) => {
   const weaponId = event.target.dataset.historyWeaponId;
   if (!weaponId) return;
@@ -953,6 +1535,7 @@ els.soundVolume?.addEventListener('input', () => {
 });
 els.playersInput.addEventListener('input', () => {
   syncModeFromPlayers();
+  renderAdvancedRuleControls();
   updateSummary();
 });
 els.modeInputs.forEach((input) => {
@@ -979,6 +1562,7 @@ els.clearPlayersBtn.addEventListener('click', () => {
   state.latestAssignments = [];
   state.latestResultSnapshot = null;
   renderResults([]);
+  renderAdvancedRuleControls();
   updateSummary();
   setControlsDisabled(false);
   updateDrawButtonLabel();
@@ -987,6 +1571,7 @@ document.querySelectorAll('[data-sample]').forEach((button) => {
   button.addEventListener('click', () => {
     els.playersInput.value = samples[button.dataset.sample].join('\n');
     setDrawMode(button.dataset.sample === '1' ? 'single' : 'multi');
+    renderAdvancedRuleControls();
     updateSummary();
   });
 });
@@ -995,5 +1580,6 @@ preloadWeaponImages();
 renderTypeFilters();
 renderWeaponList();
 renderSingleHistory();
+renderAdvancedRuleControls();
 updateSummary();
 updateDrawButtonLabel();

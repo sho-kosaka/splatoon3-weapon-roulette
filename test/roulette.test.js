@@ -21,6 +21,28 @@ const definitions = [
   { type: 'チャージャー', weapons: ['リッター4K'] },
 ];
 
+const rangeWeapons = [
+  { id: 'low-1', name: '短1', type: 'テスト', isOrder: false, xMatchRangeLabel: '短射程' },
+  { id: 'low-2', name: '短2', type: 'テスト', isOrder: false, xMatchRangeLabel: '短中射程' },
+  { id: 'mid-1', name: '中1', type: 'テスト', isOrder: false, xMatchRangeLabel: '中射程' },
+  { id: 'mid-2', name: '中2', type: 'テスト', isOrder: false, xMatchRangeLabel: '中長射程' },
+  { id: 'long-1', name: '長1', type: 'テスト', isOrder: false, xMatchRangeLabel: '長射程' },
+  { id: 'long-2', name: '長2', type: 'テスト', isOrder: false, xMatchRangeLabel: '超長射程' },
+  { id: 'low-3', name: '短3', type: 'テスト', isOrder: false, xMatchRangeLabel: '短射程' },
+  { id: 'low-4', name: '短4', type: 'テスト', isOrder: false, xMatchRangeLabel: '短中射程' },
+];
+
+function longRangeCount(assignments) {
+  return assignments.filter((assignment) => ['長射程', '超長射程'].includes(assignment.weapon.xMatchRangeLabel)).length;
+}
+
+function rangeLabelCounts(assignments) {
+  return assignments.reduce((counts, assignment) => {
+    counts[assignment.weapon.xMatchRangeLabel] = (counts[assignment.weapon.xMatchRangeLabel] ?? 0) + 1;
+    return counts;
+  }, {});
+}
+
 test('buildWeapons creates stable ids, type metadata, order flag, and image path', () => {
   const weapons = buildWeapons(definitions);
   assert.deepEqual(weapons[0], {
@@ -94,6 +116,127 @@ test('drawAssignments reports impossible no-duplicate conditions', () => {
   const weapons = buildWeapons([{ type: 'フデ', weapons: ['パブロ'] }]);
   const result = drawAssignments(['A', 'B'], weapons, { noDuplicateWeapons: true, random: () => 0 });
   assert.equal(result.error, '重複なしで抽選するには、参加者数より候補ブキ数が少なすぎます。');
+});
+
+test('drawAssignments caps range labels across all players when team mode is off', () => {
+  const result = drawAssignments(['A', 'B', 'C', 'D'], rangeWeapons, {
+    noDuplicateWeapons: true,
+    random: () => 0,
+    assignmentConstraints: [{
+      kind: 'maxAtOrAboveXMatchRangeLabel',
+      scope: 'all',
+      thresholdLabel: '長射程',
+      maxCount: 1,
+    }],
+  });
+  assert.equal(result.error, null);
+  assert.ok(longRangeCount(result.assignments) <= 1);
+  assert.deepEqual(result.teams, []);
+});
+
+test('drawAssignments applies range caps to each team', () => {
+  const result = drawAssignments(['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3', 'B4'], rangeWeapons, {
+    noDuplicateWeapons: true,
+    random: () => 0,
+    teamMode: { enabled: true, split: 'halves' },
+    assignmentConstraints: [{
+      kind: 'maxAtOrAboveXMatchRangeLabel',
+      scope: 'eachTeam',
+      thresholdLabel: '長射程',
+      maxCount: 1,
+    }],
+  });
+  assert.equal(result.error, null);
+  assert.equal(result.teams.length, 2);
+  const teamA = result.assignments.filter((assignment) => assignment.teamId === 'A');
+  const teamB = result.assignments.filter((assignment) => assignment.teamId === 'B');
+  assert.equal(teamA.length, 4);
+  assert.equal(teamB.length, 4);
+  assert.ok(longRangeCount(teamA) <= 1);
+  assert.ok(longRangeCount(teamB) <= 1);
+});
+
+test('drawAssignments respects manually arranged teams', () => {
+  const result = drawAssignments(['P1', 'P2', 'P3', 'P4'], rangeWeapons, {
+    random: () => 0,
+    teamMode: {
+      enabled: true,
+      groups: [
+        { id: 'A', name: 'Aチーム', playerIndexes: [0, 2] },
+        { id: 'B', name: 'Bチーム', playerIndexes: [1, 3] },
+      ],
+    },
+  });
+  assert.equal(result.error, null);
+  assert.deepEqual(result.assignments.filter((assignment) => assignment.teamId === 'A').map((assignment) => assignment.player), ['P1', 'P3']);
+  assert.deepEqual(result.assignments.filter((assignment) => assignment.teamId === 'B').map((assignment) => assignment.player), ['P2', 'P4']);
+});
+
+test('drawAssignments applies exact range-count table to each team', () => {
+  const result = drawAssignments(['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3', 'B4'], rangeWeapons, {
+    random: () => 0,
+    teamMode: { enabled: true, split: 'halves' },
+    assignmentConstraints: [
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '短射程', maxCount: 1 },
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '短中射程', maxCount: 1 },
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '中射程', maxCount: 1 },
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '中長射程', maxCount: 1 },
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '長射程', maxCount: 0 },
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '超長射程', maxCount: 0 },
+    ],
+  });
+  assert.equal(result.error, null);
+  const teamA = result.assignments.filter((assignment) => assignment.teamId === 'A');
+  const teamB = result.assignments.filter((assignment) => assignment.teamId === 'B');
+  assert.deepEqual(rangeLabelCounts(teamA), { 短射程: 1, 短中射程: 1, 中射程: 1, 中長射程: 1 });
+  assert.deepEqual(rangeLabelCounts(teamB), { 短射程: 1, 短中射程: 1, 中射程: 1, 中長射程: 1 });
+});
+
+test('drawAssignments can fix one exact range label in each team', () => {
+  const result = drawAssignments(['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3', 'B4'], rangeWeapons, {
+    random: () => 0,
+    teamMode: { enabled: true, split: 'halves' },
+    assignmentConstraints: [
+      { kind: 'maxExactXMatchRangeLabel', scope: 'eachTeam', label: '長射程', maxCount: 1 },
+      { kind: 'minExactXMatchRangeLabel', scope: 'eachTeam', label: '長射程', minCount: 1 },
+    ],
+  });
+  assert.equal(result.error, null);
+  const teamA = result.assignments.filter((assignment) => assignment.teamId === 'A');
+  const teamB = result.assignments.filter((assignment) => assignment.teamId === 'B');
+  assert.equal(rangeLabelCounts(teamA).長射程, 1);
+  assert.equal(rangeLabelCounts(teamB).長射程, 1);
+});
+
+test('drawAssignments can fix one long-or-ultra range slot in each team', () => {
+  const result = drawAssignments(['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3', 'B4'], rangeWeapons, {
+    random: () => 0,
+    teamMode: { enabled: true, split: 'halves' },
+    assignmentConstraints: [
+      { kind: 'maxAtOrAboveXMatchRangeLabel', scope: 'eachTeam', thresholdLabel: '長射程', maxCount: 1 },
+      { kind: 'minAtOrAboveXMatchRangeLabel', scope: 'eachTeam', thresholdLabel: '長射程', minCount: 1 },
+    ],
+  });
+  assert.equal(result.error, null);
+  const teamA = result.assignments.filter((assignment) => assignment.teamId === 'A');
+  const teamB = result.assignments.filter((assignment) => assignment.teamId === 'B');
+  assert.equal(longRangeCount(teamA), 1);
+  assert.equal(longRangeCount(teamB), 1);
+});
+
+test('drawAssignments reports impossible range caps', () => {
+  const highOnly = rangeWeapons.filter((weapon) => ['長射程', '超長射程'].includes(weapon.xMatchRangeLabel));
+  const result = drawAssignments(['A', 'B'], highOnly, {
+    random: () => 0,
+    assignmentConstraints: [{
+      kind: 'maxAtOrAboveXMatchRangeLabel',
+      scope: 'all',
+      thresholdLabel: '長射程',
+      maxCount: 0,
+    }],
+  });
+  assert.match(result.error, /射程制限を満たせません/);
+  assert.deepEqual(result.assignments, []);
 });
 
 test('drawSingleWeapon returns one weapon and reports empty candidate error', () => {
@@ -187,4 +330,21 @@ test('generateShareText creates a compact Discord-friendly result with order mar
   assert.match(text, /たむた: わかばシューター/);
   assert.match(text, /りん: オーダーシューター レプリカ.*オーダー/);
   assert.match(text, /対象: シューター \/ 重複なし/);
+});
+
+test('generateShareText groups team assignments', () => {
+  const text = generateShareText({
+    title: '次の武器縛りプラベ',
+    ruleSummary: 'チームあり',
+    assignments: [
+      { player: 'A1', weapon: rangeWeapons[0], teamId: 'A', teamName: 'Aチーム', teamIndex: 0, teamSlotIndex: 0 },
+      { player: 'B1', weapon: rangeWeapons[1], teamId: 'B', teamName: 'Bチーム', teamIndex: 1, teamSlotIndex: 0 },
+      { player: 'A2', weapon: rangeWeapons[2], teamId: 'A', teamName: 'Aチーム', teamIndex: 0, teamSlotIndex: 1 },
+    ],
+  });
+  assert.match(text, /【Aチーム】/);
+  assert.match(text, /1\. A1: 短1/);
+  assert.match(text, /2\. A2: 中1/);
+  assert.match(text, /【Bチーム】/);
+  assert.match(text, /1\. B1: 短2/);
 });

@@ -40,6 +40,8 @@ export const TYPE_COLORS = {
   'ワイパー': ['#caffbf', '#2dc653'],
 };
 
+export const X_MATCH_RANGE_LABELS = Object.freeze(['短射程', '短中射程', '中射程', '中長射程', '長射程', '超長射程']);
+
 const X_MATCH_RANGE_LABEL_BY_STAT_INK_KEY = Object.freeze({
   '52gal': '短中射程',
   '52gal_deco': '短中射程',
@@ -295,6 +297,266 @@ function pickRandom(items, random = Math.random) {
   return items[Math.floor(random() * items.length)];
 }
 
+function shuffled(items, random) {
+  const next = [...items];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+  return next;
+}
+
+function rangeLabelRank(label) {
+  return X_MATCH_RANGE_LABELS.indexOf(label);
+}
+
+function isAtOrAboveXMatchRangeLabel(weapon, thresholdLabel) {
+  const weaponRank = rangeLabelRank(weapon.xMatchRangeLabel);
+  const thresholdRank = rangeLabelRank(thresholdLabel);
+  return weaponRank >= thresholdRank;
+}
+
+function buildAssignmentGroups(players, teamMode = {}) {
+  const allIndexes = players.map((_, index) => index);
+  if (!teamMode.enabled || players.length < 2) {
+    return { groups: [{ id: 'all', name: '全体', playerIndexes: allIndexes }] };
+  }
+
+  if (Array.isArray(teamMode.groups) && teamMode.groups.length) {
+    const seen = new Set();
+    const groups = teamMode.groups.map((group, groupIndex) => {
+      const playerIndexes = (group.playerIndexes ?? [])
+        .map((playerIndex) => Number(playerIndex))
+        .filter((playerIndex) => Number.isInteger(playerIndex) && playerIndex >= 0 && playerIndex < players.length);
+      return {
+        id: group.id ?? String(groupIndex),
+        name: group.name ?? `${groupIndex + 1}チーム`,
+        playerIndexes: playerIndexes.filter((playerIndex) => {
+          if (seen.has(playerIndex)) return false;
+          seen.add(playerIndex);
+          return true;
+        }),
+      };
+    });
+    if (seen.size !== players.length) {
+      return { groups: [], error: 'チームに未割り当ての参加者がいます。' };
+    }
+    if (groups.length < 2 || groups.some((group) => !group.playerIndexes.length)) {
+      return { groups: [], error: 'A/Bチームの両方に参加者を入れてください。' };
+    }
+    return { groups };
+  }
+
+  const split = 'halves';
+  let aIndexes = [];
+  let bIndexes = [];
+  if (split === 'halves') {
+    const splitAt = Math.ceil(players.length / 2);
+    aIndexes = allIndexes.slice(0, splitAt);
+    bIndexes = allIndexes.slice(splitAt);
+  } else {
+    return { groups: [], error: 'チーム分けの指定が不正です。' };
+  }
+
+  if (!aIndexes.length || !bIndexes.length) {
+    return { groups: [], error: 'チーム分けには参加者が2人以上必要です。' };
+  }
+
+  return {
+    groups: [
+      { id: 'A', name: 'Aチーム', playerIndexes: aIndexes },
+      { id: 'B', name: 'Bチーム', playerIndexes: bIndexes },
+    ],
+  };
+}
+
+function normalizedAssignmentConstraints(options = {}) {
+  return (options.assignmentConstraints ?? [])
+    .filter((constraint) => constraint?.enabled !== false)
+    .map((constraint) => ({
+      kind: constraint.kind,
+      scope: constraint.scope ?? 'all',
+      thresholdLabel: constraint.thresholdLabel,
+      label: constraint.label ?? constraint.thresholdLabel,
+      maxCount: Number(constraint.maxCount),
+      minCount: Number(constraint.minCount),
+    }));
+}
+
+function matchesRangeConstraint(weapon, tracker) {
+  if (tracker.match === 'exact') return weapon.xMatchRangeLabel === tracker.label;
+  return isAtOrAboveXMatchRangeLabel(weapon, tracker.thresholdLabel);
+}
+
+function createConstraintTrackers(players, groups, constraints, candidateWeapons, options = {}) {
+  const trackers = [];
+  const groupById = new Map(groups.map((group) => [group.id, group]));
+
+  for (const constraint of constraints) {
+    if (!['maxAtOrAboveXMatchRangeLabel', 'maxExactXMatchRangeLabel', 'minExactXMatchRangeLabel', 'minAtOrAboveXMatchRangeLabel'].includes(constraint.kind)) {
+      return { trackers: [], error: '射程制限の種類が不正です。' };
+    }
+    const isExactConstraint = ['maxExactXMatchRangeLabel', 'minExactXMatchRangeLabel'].includes(constraint.kind);
+    const isMinimumConstraint = ['minExactXMatchRangeLabel', 'minAtOrAboveXMatchRangeLabel'].includes(constraint.kind);
+    const label = isExactConstraint ? constraint.label : constraint.thresholdLabel;
+    if (rangeLabelRank(label) < 0) {
+      return { trackers: [], error: '射程ラベルの指定が不正です。' };
+    }
+    if (!isMinimumConstraint && (!Number.isInteger(constraint.maxCount) || constraint.maxCount < 0)) {
+      return { trackers: [], error: '射程制限の上限人数が不正です。' };
+    }
+    if (isMinimumConstraint && (!Number.isInteger(constraint.minCount) || constraint.minCount < 0)) {
+      return { trackers: [], error: '射程制限の固定人数が不正です。' };
+    }
+    if (candidateWeapons.some((weapon) => rangeLabelRank(weapon.xMatchRangeLabel) < 0)) {
+      return { trackers: [], error: '射程ラベルが未設定のブキが候補に含まれています。' };
+    }
+
+    const addTracker = (id, name, playerIndexes) => {
+      const minCount = isMinimumConstraint ? constraint.minCount : 0;
+      const maxCount = isMinimumConstraint ? playerIndexes.length : Math.min(constraint.maxCount, playerIndexes.length);
+      if (minCount > playerIndexes.length) return false;
+      if (constraint.kind === 'maxAtOrAboveXMatchRangeLabel') {
+        const requiredLowCount = Math.max(0, playerIndexes.length - constraint.maxCount);
+        const lowCandidates = candidateWeapons.filter((weapon) => !isAtOrAboveXMatchRangeLabel(weapon, constraint.thresholdLabel));
+        if (!lowCandidates.length && requiredLowCount > 0) {
+          return false;
+        }
+        if (options.noDuplicateWeapons && lowCandidates.length < requiredLowCount) {
+          return false;
+        }
+      }
+      if (isMinimumConstraint) {
+        const requiredCandidates = candidateWeapons.filter((weapon) => (
+          isExactConstraint
+            ? weapon.xMatchRangeLabel === label
+            : isAtOrAboveXMatchRangeLabel(weapon, constraint.thresholdLabel)
+        ));
+        if (options.noDuplicateWeapons ? requiredCandidates.length < minCount : !requiredCandidates.length) {
+          return false;
+        }
+      }
+      trackers.push({
+        id,
+        name,
+        match: isExactConstraint ? 'exact' : 'atOrAbove',
+        label,
+        thresholdLabel: label,
+        maxCount,
+        minCount,
+        count: 0,
+        playerIndexes: new Set(playerIndexes),
+      });
+      return true;
+    };
+
+    if (constraint.scope === 'eachTeam') {
+      const targetGroups = groups.length > 1 ? groups : [{ id: 'all', name: '全体', playerIndexes: players.map((_, index) => index) }];
+      for (const group of targetGroups) {
+        if (!addTracker(`${constraint.scope}:${group.id}:${label}`, group.name, group.playerIndexes)) {
+          return { trackers: [], error: `${group.name}の射程制限を満たせません。候補ブキを増やすか、上限をゆるめてください。` };
+        }
+      }
+    } else if (constraint.scope === 'all') {
+      if (!addTracker(`all:${label}`, '全体', players.map((_, index) => index))) {
+        return { trackers: [], error: '射程制限を満たせません。候補ブキを増やすか、上限をゆるめてください。' };
+      }
+    } else if (constraint.scope.startsWith('team:')) {
+      const groupId = constraint.scope.slice('team:'.length);
+      const group = groupById.get(groupId);
+      if (!group) return { trackers: [], error: '射程制限の適用先チームが見つかりません。' };
+      if (!addTracker(`${constraint.scope}:${label}`, group.name, group.playerIndexes)) {
+        return { trackers: [], error: `${group.name}の射程制限を満たせません。候補ブキを増やすか、上限をゆるめてください。` };
+      }
+    } else {
+      return { trackers: [], error: '射程制限の適用先が不正です。' };
+    }
+  }
+
+  return { trackers };
+}
+
+function decorateAssignments(players, weaponsByPlayerIndex, groups) {
+  const groupByPlayerIndex = new Map();
+  groups.forEach((group, teamIndex) => {
+    group.playerIndexes.forEach((playerIndex, slotIndex) => {
+      groupByPlayerIndex.set(playerIndex, { ...group, teamIndex, slotIndex });
+    });
+  });
+
+  const assignments = players.map((player, playerIndex) => {
+    const group = groupByPlayerIndex.get(playerIndex);
+    return {
+      player,
+      weapon: weaponsByPlayerIndex[playerIndex],
+      teamId: group?.id ?? 'all',
+      teamName: group?.name ?? '全体',
+      teamIndex: group?.teamIndex ?? 0,
+      teamSlotIndex: group?.slotIndex ?? playerIndex,
+    };
+  });
+
+  return {
+    assignments,
+    teams: groups.length > 1 ? groups.map((group) => ({
+      id: group.id,
+      name: group.name,
+      playerIndexes: [...group.playerIndexes],
+      players: group.playerIndexes.map((playerIndex) => players[playerIndex]),
+    })) : [],
+  };
+}
+
+function drawConstrainedAssignments(players, candidateWeapons, groups, constraints, options = {}) {
+  const trackerResult = createConstraintTrackers(players, groups, constraints, candidateWeapons, options);
+  if (trackerResult.error) return { assignments: [], error: trackerResult.error };
+
+  const random = options.random ?? Math.random;
+  const slotOrder = shuffled(players.map((_, index) => index), random);
+  const weaponsByPlayerIndex = new Array(players.length);
+  const trackers = trackerResult.trackers;
+
+  function canAssign(playerIndex, weapon) {
+    return trackers.every((tracker) => {
+      if (!tracker.playerIndexes.has(playerIndex)) return true;
+      if (!matchesRangeConstraint(weapon, tracker)) return true;
+      return tracker.count + 1 <= tracker.maxCount;
+    });
+  }
+
+  function applyTrackerChange(playerIndex, weapon, direction) {
+    trackers.forEach((tracker) => {
+      if (tracker.playerIndexes.has(playerIndex) && matchesRangeConstraint(weapon, tracker)) {
+        tracker.count += direction;
+      }
+    });
+  }
+
+  function search(slotPosition, remainingWeapons) {
+    if (slotPosition >= slotOrder.length) {
+      return trackers.every((tracker) => tracker.count >= tracker.minCount);
+    }
+    const playerIndex = slotOrder[slotPosition];
+    const candidates = shuffled(options.noDuplicateWeapons ? remainingWeapons : candidateWeapons, random);
+    for (const weapon of candidates) {
+      if (!canAssign(playerIndex, weapon)) continue;
+      weaponsByPlayerIndex[playerIndex] = weapon;
+      applyTrackerChange(playerIndex, weapon, 1);
+      const nextRemaining = options.noDuplicateWeapons ? remainingWeapons.filter((item) => item.id !== weapon.id) : remainingWeapons;
+      if (search(slotPosition + 1, nextRemaining)) return true;
+      applyTrackerChange(playerIndex, weapon, -1);
+      weaponsByPlayerIndex[playerIndex] = null;
+    }
+    return false;
+  }
+
+  if (!search(0, candidateWeapons)) {
+    return { assignments: [], error: '射程制限を満たせません。候補ブキを増やすか、上限をゆるめてください。' };
+  }
+
+  return { ...decorateAssignments(players, weaponsByPlayerIndex, groups), error: null };
+}
+
 export function drawAssignments(players, candidateWeapons, options = {}) {
   if (!players.length) return { assignments: [], error: '参加者を1人以上入力してください。' };
   if (!candidateWeapons.length) return { assignments: [], error: '条件に合うブキがありません。縛りをゆるめてください。' };
@@ -302,17 +564,24 @@ export function drawAssignments(players, candidateWeapons, options = {}) {
     return { assignments: [], error: '重複なしで抽選するには、参加者数より候補ブキ数が少なすぎます。' };
   }
 
+  const groupResult = buildAssignmentGroups(players, options.teamMode);
+  if (groupResult.error) return { assignments: [], error: groupResult.error };
+  const constraints = normalizedAssignmentConstraints(options);
+  if (constraints.length) {
+    return drawConstrainedAssignments(players, candidateWeapons, groupResult.groups, constraints, options);
+  }
+
   const random = options.random ?? Math.random;
   const remaining = [...candidateWeapons];
-  const assignments = players.map((player) => {
+  const weaponsByPlayerIndex = players.map(() => {
     const weapon = pickRandom(remaining, random);
     if (options.noDuplicateWeapons) {
       remaining.splice(remaining.findIndex((item) => item.id === weapon.id), 1);
     }
-    return { player, weapon };
+    return weapon;
   });
 
-  return { assignments, error: null };
+  return { ...decorateAssignments(players, weaponsByPlayerIndex, groupResult.groups), error: null };
 }
 
 export function drawSingleWeapon(candidateWeapons, options = {}) {
@@ -358,16 +627,59 @@ export function summarizeRule(rule = {}) {
   const typeText = rule.enabledTypes?.length ? rule.enabledTypes.join(' / ') : '全ブキ種';
   const duplicateText = rule.noDuplicateWeapons ? 'ブキ重複なし' : 'ブキ重複あり';
   const orderText = rule.includeOrderWeapons === false ? 'オーダー武器なし' : 'オーダー武器あり';
-  return `対象: ${typeText} / ${duplicateText} / ${orderText}`;
+  const teamText = rule.teamMode?.enabled ? 'チーム分けあり（A/B）' : 'チーム分けなし';
+  const constraints = normalizedAssignmentConstraints(rule);
+  const exactConstraints = constraints.filter((constraint) => constraint.kind === 'maxExactXMatchRangeLabel');
+  const minExactConstraints = constraints.filter((constraint) => constraint.kind === 'minExactXMatchRangeLabel');
+  const minAtOrAboveConstraints = constraints.filter((constraint) => constraint.kind === 'minAtOrAboveXMatchRangeLabel');
+  const otherConstraints = constraints.filter((constraint) => !['maxExactXMatchRangeLabel', 'minExactXMatchRangeLabel', 'minAtOrAboveXMatchRangeLabel'].includes(constraint.kind));
+  const exactByScope = new Map();
+  exactConstraints.forEach((constraint) => {
+    if (!exactByScope.has(constraint.scope)) exactByScope.set(constraint.scope, []);
+    exactByScope.get(constraint.scope).push(constraint);
+  });
+  const exactText = [...exactByScope.entries()].map(([scope, scopedConstraints]) => {
+    const scopeText = scope === 'eachTeam' ? '各チーム' : scope === 'all' ? '全体' : scope.replace('team:', '');
+    const distribution = scopedConstraints
+      .filter((constraint) => constraint.maxCount > 0)
+      .map((constraint) => `${constraint.label}${constraint.maxCount}`)
+      .join(' / ') || 'なし';
+    return `${scopeText}: 射程配分 ${distribution}`;
+  }).join(' / ');
+  const minExactText = minExactConstraints.map((constraint) => {
+    const scopeText = constraint.scope === 'eachTeam' ? '各チーム' : constraint.scope === 'all' ? '全体' : constraint.scope.replace('team:', '');
+    return `${scopeText}: ${constraint.label}${constraint.minCount}枠固定`;
+  }).join(' / ');
+  const minAtOrAboveText = minAtOrAboveConstraints.map((constraint) => {
+    const scopeText = constraint.scope === 'eachTeam' ? '各チーム' : constraint.scope === 'all' ? '全体' : constraint.scope.replace('team:', '');
+    const targetText = constraint.thresholdLabel === '超長射程' ? '超長射程' : `${constraint.thresholdLabel}以上`;
+    return `${scopeText}: ${targetText}${constraint.minCount}枠固定`;
+  }).join(' / ');
+  const otherText = otherConstraints.map((constraint) => {
+    const scopeText = constraint.scope === 'eachTeam' ? '各チーム' : constraint.scope === 'all' ? '全体' : constraint.scope.replace('team:', '');
+    const targetText = constraint.thresholdLabel === '超長射程' ? '超長射程' : `${constraint.thresholdLabel}以上`;
+    return `${scopeText}: ${targetText} 最大${constraint.maxCount}人`;
+  }).join(' / ');
+  const constraintText = [exactText, minExactText, minAtOrAboveText, otherText].filter(Boolean).join(' / ');
+  return `対象: ${typeText} / ${duplicateText} / ${orderText} / ${teamText}${constraintText ? ` / ${constraintText}` : ''}`;
 }
 
-export function createResultSnapshot({ title = 'ブキ縛りプラベ結果', ruleSummary = '', assignments = [] } = {}) {
+export function createResultSnapshot({ title = 'ブキ縛りプラベ結果', ruleSummary = '', assignments = [], teams = [] } = {}) {
   return {
     title,
     ruleSummary,
+    teams: teams.map((team) => ({
+      ...team,
+      playerIndexes: [...(team.playerIndexes ?? [])],
+      players: [...(team.players ?? [])],
+    })),
     assignments: assignments.map((assignment) => ({
       player: assignment.player,
       weapon: { ...assignment.weapon },
+      teamId: assignment.teamId ?? 'all',
+      teamName: assignment.teamName ?? '全体',
+      teamIndex: assignment.teamIndex ?? 0,
+      teamSlotIndex: assignment.teamSlotIndex ?? 0,
     })),
   };
 }
@@ -376,10 +688,29 @@ export function generateShareText({ title = 'ブキ縛りプラベ結果', ruleS
   const lines = [title];
   if (ruleSummary) lines.push(ruleSummary);
   lines.push('');
-  assignments.forEach((assignment, index) => {
-    const marker = assignment.weapon.isOrder ? ' / オーダー' : '';
-    lines.push(`${index + 1}. ${assignment.player}: ${assignment.weapon.name}（${assignment.weapon.type}${marker}）`);
-  });
+  const hasTeams = assignments.some((assignment) => assignment.teamId && assignment.teamId !== 'all');
+  if (hasTeams) {
+    const teams = [...new Map(assignments.map((assignment) => [
+      assignment.teamId,
+      { id: assignment.teamId, name: assignment.teamName, index: assignment.teamIndex },
+    ])).values()].sort((a, b) => a.index - b.index);
+    teams.forEach((team) => {
+      lines.push(`【${team.name}】`);
+      assignments
+        .filter((assignment) => assignment.teamId === team.id)
+        .sort((a, b) => a.teamSlotIndex - b.teamSlotIndex)
+        .forEach((assignment, index) => {
+          const marker = assignment.weapon.isOrder ? ' / オーダー' : '';
+          lines.push(`${index + 1}. ${assignment.player}: ${assignment.weapon.name}（${assignment.weapon.type}${marker}）`);
+        });
+      lines.push('');
+    });
+  } else {
+    assignments.forEach((assignment, index) => {
+      const marker = assignment.weapon.isOrder ? ' / オーダー' : '';
+      lines.push(`${index + 1}. ${assignment.player}: ${assignment.weapon.name}（${assignment.weapon.type}${marker}）`);
+    });
+  }
   lines.push('', '文句はルーレットに言ってください。');
   return lines.join('\n');
 }
